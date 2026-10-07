@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "UniStats",
+    "slug": "unistats",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "backgroundColor": "#5A3FFF"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.pierfrancesco.UniStats",
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true
+      },
+      "appleTeamId": "9JFPPZ56V8"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#5A3FFF"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.pierfrancesco.unistats"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-localization",
+      "expo-font",
+      "expo-splash-screen",
+      "@react-native-community/datetimepicker",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.5"
+          }
+        }
+      ],
+      "./plugins/withPodDeploymentTarget",
+      "./plugins/withSceneLifecycle"
+    ]
+  }
+}
