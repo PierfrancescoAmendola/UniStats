@@ -2,7 +2,7 @@
   "expo": {
     "name": "UniStats",
     "slug": "unistats",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -11,9 +11,11 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.pierfrancesco.UniStats",
       "infoPlist": {
-        "CFBundleAllowMixedLocalizations": true
+        "CFBundleAllowMixedLocalizations": true,
+        "ITSAppUsesNonExemptEncryption": false
       },
-      "appleTeamId": "9JFPPZ56V8"
+      "appleTeamId": "9JFPPZ56V8",
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
@@ -22,7 +24,8 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.pierfrancesco.unistats"
+      "package": "com.pierfrancesco.unistats",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
