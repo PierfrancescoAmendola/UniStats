@@ -47,7 +47,7 @@ export const HowCalcScreen = () => {
 
             <Animated.View entering={enter(1)} style={[styles.card, { flexDirection: 'row', gap: 12 }]}>
                 <View style={[styles.num, { backgroundColor: C.sun }]}>
-                    <Text style={{ fontFamily: F.display, fontSize: 15, color: C.text }}>1</Text>
+                    <Text style={{ fontFamily: F.display, fontSize: 15, color: C.ink }}>1</Text>
                 </View>
                 <View style={{ flex: 1, gap: 8 }}>
                     <Text style={styles.stepTitle}>{t('step1')}</Text>

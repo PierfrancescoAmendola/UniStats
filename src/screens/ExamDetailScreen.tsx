@@ -1,9 +1,9 @@
 import { ArrowRight } from 'lucide-react-native';
 import React, { useMemo, useRef } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import Animated, { ZoomIn } from 'react-native-reanimated';
+import { Alert, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Bar, enter, PressableScale } from '../components/motion';
+import { Bar, enter, PressableScale, pop } from '../components/motion';
 import { BackButton } from '../components/ui';
 import { computeAverage } from '../engine/average';
 import { baseFor } from '../engine/graduation';
@@ -24,6 +24,7 @@ const HEAD = themed(() => ({
 
 export const ExamDetailScreen = ({ navigation, route }: ScreenProps<'ExamDetail'>) => {
     const { t, lang, state, rule, upsertExam, deleteExam } = useApp();
+    const { width } = useWindowDimensions();
     const insets = useSafeAreaInsets();
     const exam = state.exams.find((e) => e.id === route.params.examId);
     const noteRef = useRef(exam?.note ?? '');
@@ -42,6 +43,10 @@ export const ExamDetailScreen = ({ navigation, route }: ScreenProps<'ExamDetail'
     if (!exam || !data) return null;
     const tier = tierOf(exam.grade, exam.lode);
     const head = HEAD[tier];
+    // Long single words (German compounds) must fit on one line instead of breaking mid-word:
+    // the title column is the screen minus paddings and the 96 pt badge.
+    const longest = Math.max(...exam.name.split(/\s+/).map((w) => w.length));
+    const titleSize = Math.min(32, Math.floor((width - 160) / (longest * 0.62)));
     const graded = exam.grade !== null;
     const label = !graded ? t('passFailShort') : exam.lode ? '30L' : String(exam.grade);
     const a1 = data.withIt.avg30;
@@ -92,13 +97,15 @@ export const ExamDetailScreen = ({ navigation, route }: ScreenProps<'ExamDetail'
                         <Text style={{ fontFamily: F.bold, fontSize: 14, color: head.fg }}>
                             {t('yearN', { n: exam.year })} · {formatDate(lang, exam.date, 'long')}
                         </Text>
-                        <Text style={[styles.h1, { color: head.fg }]}>{exam.name}</Text>
+                        <Text style={[styles.h1, { color: head.fg, fontSize: titleSize, lineHeight: titleSize + 2 }]} numberOfLines={3}>
+                            {exam.name}
+                        </Text>
                         <Text style={{ fontFamily: F.semi, fontSize: 15, color: head.fg }}>
                             {t('cfuN', { n: exam.cfu })} · {t(`tier_${tier}` as const)}
                         </Text>
                     </Animated.View>
-                    <Animated.View entering={ZoomIn.delay(120).springify().damping(11)} style={styles.bigBadge}>
-                        <Text style={{ fontFamily: F.display, fontSize: graded ? 48 : 26, color: TIER_COLORS[tier].fg === C.sun ? C.ink : TIER_COLORS[tier].fg }}>{label}</Text>
+                    <Animated.View entering={pop(120)} style={styles.bigBadge}>
+                        <Text style={{ fontFamily: F.display, fontSize: graded ? 48 : 26, color: TIER_COLORS[tier].fg === C.sun ? C.text : TIER_COLORS[tier].fg }}>{label}</Text>
                     </Animated.View>
                 </View>
             </View>
@@ -127,9 +134,9 @@ export const ExamDetailScreen = ({ navigation, route }: ScreenProps<'ExamDetail'
                             <Text style={{ fontFamily: F.body, fontSize: 13, color: C.text3 }}>{t('ofGradedCfu', { a: exam.cfu, b: data.withIt.gradedCfu })}</Text>
                         </View>
                         <View style={[styles.card, { flex: 1, backgroundColor: C.sun, gap: 6 }]}>
-                            <Text style={[styles.lbl, { color: C.text, fontFamily: F.bold }]}>{t('ranking')}</Text>
-                            <Text style={styles.big}>{t('rankPlace', { n: data.rank })}</Text>
-                            <Text style={{ fontFamily: F.body, fontSize: 13, lineHeight: 18, color: C.text }}>{t('amongExams', { n: data.gradedCount })}</Text>
+                            <Text style={[styles.lbl, { color: C.ink, fontFamily: F.bold }]}>{t('ranking')}</Text>
+                            <Text style={[styles.big, { color: C.ink }]}>{t('rankPlace', { n: data.rank })}</Text>
+                            <Text style={{ fontFamily: F.body, fontSize: 13, lineHeight: 18, color: C.ink }}>{t('amongExams', { n: data.gradedCount })}</Text>
                         </View>
                     </Animated.View>
                 )}

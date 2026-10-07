@@ -2,9 +2,9 @@ import { useNavigation } from '@react-navigation/native';
 import { Minus, Plus } from 'lucide-react-native';
 import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import Animated, { FadeIn, useAnimatedStyle, useSharedValue, withSpring, ZoomIn } from 'react-native-reanimated';
+import Animated, { FadeIn, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AnimatedNumber, enter, PressableScale, Toggle } from '../../components/motion';
+import { AnimatedNumber, enter, PressableScale, Toggle, pop } from '../../components/motion';
 import { BackButton } from '../../components/ui';
 import { MAX_GRADE } from '../../engine/graduation';
 import { Bonus } from '../../engine/types';
@@ -118,7 +118,7 @@ export const GradSimScreen = () => {
                 </View>
                 <Animated.View entering={enter(0)} style={styles.result}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                        <View>
+                        <View style={{ flexShrink: 0 }}>
                             <Text style={{ fontFamily: F.body, fontSize: 14, color: C.text4 }}>{t('predictedFinal')}</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                                 <AnimatedNumber value={grad.final} duration={500} style={styles.final} />
@@ -126,8 +126,8 @@ export const GradSimScreen = () => {
                             </View>
                         </View>
                         {grad.lodePossible && (
-                            <Animated.View entering={ZoomIn.springify()} style={styles.lodePill}>
-                                <Text style={{ fontFamily: F.display, fontSize: 13, color: C.ink }}>{grad.lodeAutomatic ? t('lodeAutomatic') : t('lodePossible')}</Text>
+                            <Animated.View entering={pop()} style={styles.lodePill}>
+                                <Text style={{ fontFamily: F.display, fontSize: 13, color: C.ink, textAlign: 'center' }}>{grad.lodeAutomatic ? t('lodeAutomatic') : t('lodePossible')}</Text>
                             </Animated.View>
                         )}
                     </View>
@@ -222,7 +222,7 @@ const styles = themed(() => StyleSheet.create({
     h1: { fontFamily: F.display, fontSize: 22, color: C.ink, flex: 1 },
     result: { backgroundColor: C.ink, borderRadius: 28, padding: 18, gap: 12 },
     final: { fontSize: 72, lineHeight: 78, color: C.sun, minWidth: 120 },
-    lodePill: { backgroundColor: C.sun, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 6, marginBottom: 14 },
+    lodePill: { backgroundColor: C.sun, borderRadius: 14, paddingHorizontal: 10, paddingVertical: 6, marginBottom: 14, marginLeft: 10, flexShrink: 1 },
     segTrack: { height: 10, borderRadius: 5, backgroundColor: C.inkLine, overflow: 'hidden', flexDirection: 'row' },
     sheet: { flex: 1, backgroundColor: C.fog, borderTopLeftRadius: 32, borderTopRightRadius: 32, padding: 20, gap: 12 },
     card: { backgroundColor: C.surface, borderRadius: 22, paddingHorizontal: 16, paddingVertical: 14 },

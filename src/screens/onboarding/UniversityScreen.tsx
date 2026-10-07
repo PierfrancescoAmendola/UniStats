@@ -1,9 +1,9 @@
 import { Check, Search } from 'lucide-react-native';
 import React, { memo, useCallback, useDeferredValue, useMemo, useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
-import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
+import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { enter, PressableScale } from '../../components/motion';
+import { enter, PressableScale, pop } from '../../components/motion';
 import { PrimaryButton, ProgressHeader } from '../../components/ui';
 import { searchUniversities, UniKind, University, UNIVERSITIES } from '../../data/universities';
 import { presetsFor } from '../../data/presets';
@@ -27,13 +27,14 @@ const UniRow = memo(({ item, selected, onPick, kindLabel }: { item: University; 
                 </Text>
             </View>
             {selected && (
-                <Animated.View entering={ZoomIn.springify()} style={styles.check}>
+                <Animated.View entering={pop()} style={styles.check}>
                     <Check size={16} strokeWidth={3} color={C.white} />
                 </Animated.View>
             )}
         </PressableScale>
     );
 });
+UniRow.displayName = 'UniRow';
 
 export const UniversityScreen = ({ navigation, route }: ScreenProps<'University'>) => {
     const { t, state, setProfile } = useApp();
@@ -127,7 +128,7 @@ const styles = themed(() => StyleSheet.create({
     chipTxt: { fontFamily: F.semi, fontSize: 14, color: C.text },
     row: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12, borderRadius: 20, backgroundColor: C.surface, borderWidth: 2, borderColor: 'transparent' },
     mono: { width: 44, height: 44, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
-    monoTxt: { fontFamily: F.display, fontSize: 15, color: C.text },
+    monoTxt: { fontFamily: F.display, fontSize: 15, color: C.ink },
     uniName: { fontFamily: F.bold, fontSize: 16, color: C.text },
     uniCity: { fontFamily: F.body, fontSize: 13, color: C.text3, marginTop: 1 },
     check: { width: 28, height: 28, borderRadius: 14, backgroundColor: C.violet, alignItems: 'center', justifyContent: 'center' },

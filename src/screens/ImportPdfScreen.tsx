@@ -4,9 +4,9 @@ import * as Haptics from 'expo-haptics';
 import { AlertCircle, Check, FileText, FileUp, Minus, Plus } from 'lucide-react-native';
 import React, { useRef, useState } from 'react';
 import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import Animated, { FadeIn, FadeInDown, LinearTransition, ZoomIn } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInDown, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { enter, PressableScale } from '../components/motion';
+import { enter, PressableScale, rise, pop } from '../components/motion';
 import { BackButton, GradeBadge, PrimaryButton } from '../components/ui';
 import { Exam } from '../engine/types';
 import { formatDate } from '../i18n';
@@ -134,7 +134,7 @@ export const ImportPdfScreen = ({ navigation }: ScreenProps<'ImportPdf'>) => {
 
                 {phase === 'done' && (
                     <>
-                        <Animated.View entering={FadeInDown.springify()} style={styles.fileCard}>
+                        <Animated.View entering={rise()} style={styles.fileCard}>
                             <View style={styles.fileIcon}>
                                 <FileText size={24} strokeWidth={2} color={C.violet} />
                             </View>
@@ -144,7 +144,7 @@ export const ImportPdfScreen = ({ navigation }: ScreenProps<'ImportPdf'>) => {
                                 </Text>
                                 <Text style={{ fontFamily: F.body, fontSize: 13, color: C.white, opacity: 0.85 }}>{t('examsFound', { n: found.length })}</Text>
                             </View>
-                            <Animated.View entering={ZoomIn.delay(200).springify()} style={styles.okDot}>
+                            <Animated.View entering={pop(200)} style={styles.okDot}>
                                 <Check size={16} strokeWidth={3} color={C.greenDeep} />
                             </Animated.View>
                         </Animated.View>
@@ -163,7 +163,7 @@ export const ImportPdfScreen = ({ navigation }: ScreenProps<'ImportPdf'>) => {
                         {found.map((e, i) => {
                             const on = selected.has(e.key);
                             return (
-                                <Animated.View key={e.key} entering={FadeInDown.delay(Math.min(i, 12) * 40).springify()} layout={LinearTransition}>
+                                <Animated.View key={e.key} entering={rise(Math.min(i, 8) * 35)} layout={LinearTransition}>
                                     <PressableScale
                                         scaleTo={0.98}
                                         onPress={() => toggle(e.key)}
@@ -216,7 +216,7 @@ export const ImportPdfScreen = ({ navigation }: ScreenProps<'ImportPdf'>) => {
 const styles = themed(() => StyleSheet.create({
     h1: { fontFamily: F.display, fontSize: 24, color: C.text, flex: 1 },
     hero: { backgroundColor: C.violet, borderRadius: 28, padding: 20, gap: 14, alignItems: 'flex-start' },
-    heroIcon: { width: 60, height: 60, borderRadius: 20, backgroundColor: C.surface, alignItems: 'center', justifyContent: 'center' },
+    heroIcon: { width: 60, height: 60, borderRadius: 20, backgroundColor: C.white, alignItems: 'center', justifyContent: 'center' },
     heroTxt: { fontFamily: F.body, fontSize: 15, lineHeight: 22, color: C.white },
     card: { backgroundColor: C.surface, borderRadius: 22, padding: 16, gap: 10 },
     lbl: { fontFamily: F.bold, fontSize: 15, color: C.text },
@@ -225,12 +225,12 @@ const styles = themed(() => StyleSheet.create({
     warn: { borderRadius: 18, padding: 14, flexDirection: 'row', gap: 10, alignItems: 'center' },
     warnTxt: { flex: 1, fontFamily: F.medium, fontSize: 14, lineHeight: 20 },
     fileCard: { backgroundColor: C.violet, borderRadius: 24, padding: 16, flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 80 },
-    fileIcon: { width: 48, height: 48, borderRadius: 14, backgroundColor: C.surface, alignItems: 'center', justifyContent: 'center' },
+    fileIcon: { width: 48, height: 48, borderRadius: 14, backgroundColor: C.white, alignItems: 'center', justifyContent: 'center' },
     fileName: { fontFamily: F.bold, fontSize: 16, color: C.white },
     okDot: { width: 30, height: 30, borderRadius: 15, backgroundColor: C.mintPop, alignItems: 'center', justifyContent: 'center' },
     kicker: { fontFamily: F.bold, fontSize: 13, letterSpacing: 1, textTransform: 'uppercase', color: C.text3 },
     row: { backgroundColor: C.surface, borderRadius: 18, paddingHorizontal: 12, paddingVertical: 10, flexDirection: 'row', alignItems: 'center', gap: 12, borderWidth: 2, borderColor: 'transparent' },
-    box: { width: 24, height: 24, borderRadius: 8, borderWidth: 2, borderColor: '#C9C7D6', alignItems: 'center', justifyContent: 'center' },
+    box: { width: 24, height: 24, borderRadius: 8, borderWidth: 2, borderColor: C.text4, alignItems: 'center', justifyContent: 'center' },
     name: { fontFamily: F.bold, fontSize: 15, color: C.text },
     meta: { fontFamily: F.body, fontSize: 13, color: C.text3 },
     step: { width: 28, height: 28, borderRadius: 9, backgroundColor: C.fog, alignItems: 'center', justifyContent: 'center' },

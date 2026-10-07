@@ -1,5 +1,6 @@
 import { parseTranscript, prettyName, yearFromDate } from '../pdf/transcriptParser';
 import { base64ToBytes } from '../pdf/pdfText';
+import { findUniversity, searchUniversities, shortUniName } from '../data/universities';
 
 describe('transcript parser', () => {
     it('reads Esse3-style lines with code, date, grade and CFU, joining wrapped names', () => {
@@ -47,11 +48,10 @@ describe('transcript parser', () => {
 });
 
 describe('university names', () => {
-    const { findUniversity, shortUniName, searchUniversities } = require('../data/universities');
     it('shortens long names for subtitles', () => {
-        expect(shortUniName(findUniversity('sapienza'))).toBe('Sapienza');
-        expect(shortUniName(findUniversity('torvergata'))).toBe('Roma Tor Vergata');
-        expect(shortUniName(findUniversity('polimi'))).toBe('Politecnico di Milano');
+        expect(shortUniName(findUniversity('sapienza')!)).toBe('Sapienza');
+        expect(shortUniName(findUniversity('torvergata')!)).toBe('Roma Tor Vergata');
+        expect(shortUniName(findUniversity('polimi')!)).toBe('Politecnico di Milano');
     });
     it('searches ignoring accents and apostrophes', () => {
         expect(searchUniversities('ca foscari').map((u: any) => u.id)).toContain('unive');

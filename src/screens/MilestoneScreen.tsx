@@ -4,9 +4,9 @@ import { StatusBar } from 'expo-status-bar';
 import { Trophy } from 'lucide-react-native';
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
-import Animated, { Easing, FadeInDown, useAnimatedStyle, useSharedValue, withDelay, withTiming, ZoomIn } from 'react-native-reanimated';
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AnimatedNumber, PressableScale } from '../components/motion';
+import { AnimatedNumber, PressableScale, rise, celebrate } from '../components/motion';
 import { PrimaryButton } from '../components/ui';
 import { decimalSeparator, formatNumber, formatSigned } from '../i18n';
 import { ScreenProps } from '../navigation/types';
@@ -59,15 +59,15 @@ export const MilestoneScreen = ({ navigation, route }: ScreenProps<'Milestone'>)
             {Array.from({ length: 36 }, (_, i) => (
                 <Confetto key={i} i={i} w={width} h={height} />
             ))}
-            <Animated.View entering={ZoomIn.springify().damping(9)} style={[styles.badge, { backgroundColor: TIER_COLORS[tier].bg }]}>
+            <Animated.View entering={celebrate()} style={[styles.badge, { backgroundColor: TIER_COLORS[tier].bg }]}>
                 <Text style={[styles.badgeNum, { color: TIER_COLORS[tier].fg }]}>{exam.grade === null ? t('passFailShort') : exam.lode ? '30L' : exam.grade}</Text>
                 <Text style={[styles.badgeCfu, { color: TIER_COLORS[tier].fg }]}>{t('cfuN', { n: exam.cfu })}</Text>
             </Animated.View>
-            <Animated.View entering={FadeInDown.delay(200).springify()} style={{ gap: 8, alignItems: 'center' }}>
+            <Animated.View entering={rise(200)} style={{ gap: 8, alignItems: 'center' }}>
                 <Text style={styles.h1}>{t('savedTitle', { name: exam.name })}</Text>
                 <Text style={styles.body}>{exam.grade === null ? t('savedPassFail', { cfu: exam.cfu }) : t('savedBody')}</Text>
             </Animated.View>
-            <Animated.View entering={FadeInDown.delay(320).springify()} style={{ flexDirection: 'row', gap: 10, alignSelf: 'stretch' }}>
+            <Animated.View entering={rise(320)} style={{ flexDirection: 'row', gap: 10, alignSelf: 'stretch' }}>
                 <View style={[styles.tile, { backgroundColor: L.violet }]}>
                     <Text style={{ fontFamily: F.body, fontSize: 13, color: L.violetSoft }}>{t('newAverage')}</Text>
                     <AnimatedNumber value={avg.avg30 ?? 0} decimals={2} sep={decimalSeparator(lang)} duration={1200} style={styles.tileNum} />
@@ -87,7 +87,7 @@ export const MilestoneScreen = ({ navigation, route }: ScreenProps<'Milestone'>)
                 </View>
             </Animated.View>
             {avg.avg30 !== null && (
-                <Animated.View entering={FadeInDown.delay(420).springify()} style={styles.mint}>
+                <Animated.View entering={rise(420)} style={styles.mint}>
                     <Trophy size={28} strokeWidth={2.2} color={L.greenDeep} />
                     <Text style={{ flex: 1, fontFamily: F.medium, fontSize: 14, lineHeight: 20, color: L.greenDeep }}>
                         {t('milestoneLine', { base: formatNumber(lang, grad.base, 1), t: grad.thesis, g: grad.final })}
@@ -95,7 +95,7 @@ export const MilestoneScreen = ({ navigation, route }: ScreenProps<'Milestone'>)
                 </Animated.View>
             )}
             <View style={{ flex: 1 }} />
-            <Animated.View entering={FadeInDown.delay(520).springify()} style={{ alignSelf: 'stretch', gap: 6 }}>
+            <Animated.View entering={rise(520)} style={{ alignSelf: 'stretch', gap: 6 }}>
                 <PrimaryButton label={t('backHome')} bg={L.white} fg={L.ink} onPress={home} />
                 <PressableScale onPress={() => navigation.replace('AddExam')} style={{ padding: 12 }}>
                     <Text style={{ fontFamily: F.bold, fontSize: 16, color: L.white, textAlign: 'center' }}>{t('addAnother')}</Text>

@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { KeyboardAvoidingView, Linking, Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { enter, PressableScale, Toggle } from '../components/motion';
+import { enter, PressableScale, Toggle, LAYOUT } from '../components/motion';
 import { BackButton } from '../components/ui';
 import { computeAverage } from '../engine/average';
 import { Rule, RoundingMode } from '../engine/types';
@@ -170,7 +170,7 @@ export const RulesEditScreen = (_: ScreenProps<'RulesEdit'>) => {
                 </Animated.View>
 
                 <Text style={styles.kicker}>{t('bonusSection')}</Text>
-                <Animated.View entering={enter(4)} layout={LinearTransition.springify()} style={styles.group}>
+                <Animated.View entering={enter(4)} layout={LAYOUT} style={styles.group}>
                     {rule.bonuses.map((b) => (
                         <Animated.View key={b.id} entering={FadeIn} exiting={FadeOut} layout={LinearTransition} style={[styles.line, { borderBottomWidth: 1, borderBottomColor: C.line }]}>
                             <Text style={styles.lineLbl}>{bonusTitle(b, lang, t)}</Text>

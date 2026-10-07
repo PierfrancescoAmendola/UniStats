@@ -317,6 +317,17 @@ const en = {
     privacyLine: 'Your data stays on this phone. No account, no tracking.',
     version: 'Version {v}',
     editProfile: 'Edit profile',
+    appearance: 'Appearance',
+    themeSystem: 'System',
+    themeLight: 'Light',
+    themeDark: 'Dark',
+    replayIntro: 'Replay the introduction',
+    infoSection: 'Info',
+    privacyPolicy: 'Privacy policy',
+    termsOfUse: 'Terms of use',
+    contactUs: 'Contact us',
+    lastUpdated: 'Last updated: {d}',
+    close: 'Close',
 
     // Rules editor
     rulesEditTitle: 'Calculation rules',

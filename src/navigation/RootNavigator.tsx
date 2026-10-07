@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { useApp } from '../store/AppStore';
-import { C } from '../theme/tokens';
+import { C, L } from '../theme/tokens';
 import { IntroScreen } from '../screens/onboarding/IntroScreen';
 import { LevelScreen } from '../screens/onboarding/LevelScreen';
 import { UniversityScreen } from '../screens/onboarding/UniversityScreen';
@@ -21,6 +21,7 @@ import { WhatIfScreen } from '../screens/tools/WhatIfScreen';
 import { HowCalcScreen } from '../screens/tools/HowCalcScreen';
 import { RulesEditScreen } from '../screens/RulesEditScreen';
 import { MilestoneScreen } from '../screens/MilestoneScreen';
+import { LegalScreen } from '../screens/LegalScreen';
 import { TabBar } from './TabBar';
 import { RootParams, TabParams } from './types';
 
@@ -43,7 +44,7 @@ export const RootNavigator = () => {
             initialRouteName={state.onboarded ? 'Tabs' : 'Intro'}
             screenOptions={{ headerShown: false, contentStyle: { backgroundColor: C.fog }, animation: 'slide_from_right' }}
         >
-            <Stack.Screen name="Intro" component={IntroScreen} options={{ animation: 'fade' }} />
+            <Stack.Screen name="Intro" component={IntroScreen} options={({ route }) => ({ animation: route.params?.replay ? 'slide_from_bottom' : 'fade' })} />
             <Stack.Screen name="Level" component={LevelScreen} />
             <Stack.Screen name="University" component={UniversityScreen} />
             <Stack.Screen name="Rules" component={RulesScreen} />
@@ -62,10 +63,11 @@ export const RootNavigator = () => {
             <Stack.Screen name="WhatIf" component={WhatIfScreen} options={{ contentStyle: { backgroundColor: C.violet } }} />
             <Stack.Screen name="HowCalc" component={HowCalcScreen} />
             <Stack.Screen name="RulesEdit" component={RulesEditScreen} />
+            <Stack.Screen name="Legal" component={LegalScreen} />
             <Stack.Screen
                 name="Milestone"
                 component={MilestoneScreen}
-                options={{ animation: 'fade', contentStyle: { backgroundColor: C.ink }, gestureEnabled: false }}
+                options={{ animation: 'fade', contentStyle: { backgroundColor: L.ink }, gestureEnabled: false }}
             />
         </Stack.Navigator>
     );

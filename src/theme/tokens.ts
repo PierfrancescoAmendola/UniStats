@@ -46,6 +46,8 @@ const LIGHT = {
     progTrack: '#DDDBE8',
     /** Selected chip background (text on it stays white). */
     sel: '#14141F',
+    segTrack: '#E4E2EE',
+    segInd: '#FFFFFF',
 };
 
 export type Palette = typeof LIGHT;
@@ -57,14 +59,14 @@ const DARK: Palette = {
     sunSoft: '#3A3115',
     coralSoft: '#3E1D19',
     mintSoft: '#0F3324',
-    ink: '#24243A',
+    ink: '#1A1A28',
     inkSoft: '#2E2E42',
     inkLine: '#383850',
     fog: '#0C0C13',
     fogDeep: '#232333',
     track: '#262636',
     line: '#232332',
-    surface: '#181824',
+    surface: '#1A1A26',
     text: '#F4F3FA',
     text2: '#C9C8D9',
     text3: '#9C9BB0',
@@ -74,6 +76,8 @@ const DARK: Palette = {
     greenText: '#7BE8B8',
     progTrack: '#2C2C3E',
     sel: '#5A3FFF',
+    segTrack: '#13131C',
+    segInd: '#2C2C40',
 };
 
 export type Scheme = 'light' | 'dark';

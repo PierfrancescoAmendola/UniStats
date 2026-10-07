@@ -1,9 +1,9 @@
 import { Check } from 'lucide-react-native';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Animated, { FadeIn, FadeOut, interpolateColor, LinearTransition, useAnimatedStyle, useSharedValue, withSpring, ZoomIn } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, interpolateColor, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { enter, PressableScale, SPRING, tap } from '../../components/motion';
+import { enter, PressableScale, SPRING, tap, pop, LAYOUT } from '../../components/motion';
 import { PrimaryButton, ProgressHeader } from '../../components/ui';
 import { Level } from '../../engine/types';
 import { ScreenProps } from '../../navigation/types';
@@ -39,8 +39,8 @@ const LevelCard = ({ selected, badge, color, title, sub, onPress }: { selected: 
                 </View>
                 <Animated.View style={[styles.radio, radio]}>
                     {selected && (
-                        <Animated.View entering={ZoomIn.springify()}>
-                            <Check size={16} strokeWidth={3} color={C.text} />
+                        <Animated.View entering={pop()}>
+                            <Check size={16} strokeWidth={3} color={C.ink} />
                         </Animated.View>
                     )}
                 </Animated.View>
@@ -76,7 +76,7 @@ export const LevelScreen = ({ navigation, route }: ScreenProps<'Level'>) => {
                 <Text style={styles.h1}>{t('levelTitle')}</Text>
                 <Text style={styles.lead}>{t('levelBody')}</Text>
             </Animated.View>
-            <Animated.View layout={LinearTransition.springify()} style={{ gap: 12, marginTop: 20 }}>
+            <Animated.View layout={LAYOUT} style={{ gap: 12, marginTop: 20 }}>
                 {LEVELS.map((l, i) => (
                     <Animated.View key={l.id} entering={enter(i + 1)}>
                         <LevelCard
@@ -99,7 +99,7 @@ export const LevelScreen = ({ navigation, route }: ScreenProps<'Level'>) => {
                                     style={[styles.yearChip, { backgroundColor: years === y ? C.sel : C.fog }]}
                                     onPress={() => setYears(y)}
                                 >
-                                    <Text style={{ fontFamily: F.semi, fontSize: 15, color: years === y ? C.white : C.ink }}>{t('yearsCfu', { y, c: y * 60 })}</Text>
+                                    <Text style={{ fontFamily: F.semi, fontSize: 15, color: years === y ? C.white : C.text }}>{t('yearsCfu', { y, c: y * 60 })}</Text>
                                 </PressableScale>
                             ))}
                         </View>
@@ -124,7 +124,7 @@ const styles = themed(() => StyleSheet.create({
     lead: { fontFamily: F.body, fontSize: 16, lineHeight: 23, color: C.text2 },
     card: { flexDirection: 'row', alignItems: 'center', gap: 14, padding: 18, borderRadius: 24 },
     badge: { width: 52, height: 52, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
-    badgeTxt: { fontFamily: F.display, fontSize: 18, color: C.text },
+    badgeTxt: { fontFamily: F.display, fontSize: 18, color: C.ink },
     cardTitle: { fontFamily: F.bold, fontSize: 19 },
     cardSub: { fontFamily: F.body, fontSize: 14, lineHeight: 19 },
     radio: { width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },

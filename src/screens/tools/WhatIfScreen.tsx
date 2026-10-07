@@ -1,9 +1,9 @@
 import { Minus, Plus, X } from 'lucide-react-native';
 import React, { useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import Animated, { FadeIn, FadeOut, LinearTransition, useAnimatedStyle, useSharedValue, withDelay, withSpring } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withDelay, withSpring } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AnimatedNumber, enter, PressableScale } from '../../components/motion';
+import { AnimatedNumber, enter, PressableScale, LAYOUT } from '../../components/motion';
 import { BackButton } from '../../components/ui';
 import { computeAverage } from '../../engine/average';
 import { baseFor } from '../../engine/graduation';
@@ -26,7 +26,7 @@ const ChartBar = ({ value, min, max, projected, i }: { value: number; min: numbe
     const h = useSharedValue(0);
     const target = 10 + ((value - min) / Math.max(0.5, max - min)) * 96;
     useEffect(() => {
-        h.value = withDelay(i * 35, withSpring(target, { damping: 16, stiffness: 140 }));
+        h.value = withDelay(i * 35, withSpring(target, { damping: 22, stiffness: 160 }));
     }, [target, h, i]);
     const a = useAnimatedStyle(() => ({ height: h.value }));
     return <Animated.View style={[{ flex: 1, borderTopLeftRadius: 8, borderTopRightRadius: 8, borderBottomLeftRadius: 4, borderBottomRightRadius: 4, backgroundColor: projected ? C.sun : 'rgba(255,255,255,0.75)' }, a]} />;
@@ -62,7 +62,6 @@ export const WhatIfScreen = () => {
             if (a !== null) past.push({ v: a, projected: true });
         }
         return past;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.exams, hypos, rule]);
 
     const vals = series.map((s) => s.v);
@@ -125,7 +124,7 @@ export const WhatIfScreen = () => {
                 {hypos.map((h) => {
                     const tier = tierOf(Math.min(30, h.grade), h.grade === 31);
                     return (
-                        <Animated.View key={h.id} entering={FadeIn.duration(250)} exiting={FadeOut.duration(150)} layout={LinearTransition.springify()} style={styles.row}>
+                        <Animated.View key={h.id} entering={FadeIn.duration(250)} exiting={FadeOut.duration(150)} layout={LAYOUT} style={styles.row}>
                             <View style={{ flex: 1, gap: 2 }}>
                                 <TextInput defaultValue={h.name} onEndEditing={(e) => upd(h.id, { name: e.nativeEvent.text })} style={styles.name} accessibilityLabel={t('examName')} />
                                 <PressableScale onPress={() => upd(h.id, { cfu: CFU_STEPS[(CFU_STEPS.indexOf(h.cfu) + 1) % CFU_STEPS.length] })} style={{ alignSelf: 'flex-start' }}>

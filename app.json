@@ -5,11 +5,8 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "splash": {
-      "backgroundColor": "#5A3FFF"
-    },
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.pierfrancesco.UniStats",
@@ -33,7 +30,14 @@
     "plugins": [
       "expo-localization",
       "expo-font",
-      "expo-splash-screen",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#5A3FFF",
+          "image": "./assets/splash-blank.png",
+          "imageWidth": 1
+        }
+      ],
       "@react-native-community/datetimepicker",
       [
         "expo-build-properties",
@@ -45,6 +49,7 @@
       ],
       "./plugins/withPodDeploymentTarget",
       "./plugins/withSceneLifecycle"
-    ]
+    ],
+    "scheme": "unistats"
   }
 }

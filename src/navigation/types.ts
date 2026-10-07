@@ -9,7 +9,7 @@ export type TabParams = {
 };
 
 export type RootParams = {
-    Intro: undefined;
+    Intro: { replay?: boolean } | undefined;
     Level: { edit?: boolean } | undefined;
     University: { edit?: boolean } | undefined;
     Rules: { edit?: boolean } | undefined;
@@ -23,14 +23,15 @@ export type RootParams = {
     WhatIf: undefined;
     HowCalc: undefined;
     RulesEdit: undefined;
+    Legal: { doc: 'privacy' | 'terms' };
     Milestone: { examId: string; before: number | null };
 };
 
 export type ScreenProps<K extends keyof RootParams> = NativeStackScreenProps<RootParams, K>;
 
 declare global {
-    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace ReactNavigation {
+        // eslint-disable-next-line @typescript-eslint/no-empty-object-type
         interface RootParamList extends RootParams {}
     }
 }

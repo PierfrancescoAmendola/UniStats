@@ -23,8 +23,11 @@ export interface Profile {
     targetAverage: number;
 }
 
+export type ThemePref = 'system' | 'light' | 'dark';
+
 export interface State {
     hydrated: boolean;
+    theme: ThemePref;
     onboarded: boolean;
     language: Language | null;
     profile: Profile;
@@ -54,13 +57,14 @@ export const initialProfile: Profile = {
     targetAverage: 28,
 };
 
-const initial: State = { hydrated: false, onboarded: false, language: null, profile: initialProfile, exams: [] };
+const initial: State = { hydrated: false, theme: 'system', onboarded: false, language: null, profile: initialProfile, exams: [] };
 
 type Action =
     | { type: 'hydrate'; state: Partial<State> }
     | { type: 'profile'; patch: Partial<Profile> }
     | { type: 'onboarded'; value: boolean }
     | { type: 'language'; value: Language | null }
+    | { type: 'theme'; value: ThemePref }
     | { type: 'upsertExam'; exam: Exam }
     | { type: 'addExams'; exams: Exam[] }
     | { type: 'deleteExam'; id: string }
@@ -76,6 +80,8 @@ const reducer = (s: State, a: Action): State => {
             return { ...s, onboarded: a.value };
         case 'language':
             return { ...s, language: a.value };
+        case 'theme':
+            return { ...s, theme: a.value };
         case 'upsertExam': {
             const exists = s.exams.some((e) => e.id === a.exam.id);
             return { ...s, exams: exists ? s.exams.map((e) => (e.id === a.exam.id ? a.exam : e)) : [...s.exams, a.exam] };
@@ -85,7 +91,7 @@ const reducer = (s: State, a: Action): State => {
         case 'deleteExam':
             return { ...s, exams: s.exams.filter((e) => e.id !== a.id) };
         case 'reset':
-            return { ...initial, hydrated: true, language: s.language };
+            return { ...initial, hydrated: true, language: s.language, theme: s.theme };
     }
 };
 
@@ -108,6 +114,7 @@ interface Ctx {
     setProfile: (patch: Partial<Profile>) => void;
     setOnboarded: (v: boolean) => void;
     setLanguage: (l: Language | null) => void;
+    setTheme: (v: ThemePref) => void;
     upsertExam: (e: Exam) => void;
     addExams: (e: Exam[]) => void;
     deleteExam: (id: string) => void;
@@ -150,6 +157,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
             setProfile: (patch) => dispatch({ type: 'profile', patch }),
             setOnboarded: (v) => dispatch({ type: 'onboarded', value: v }),
             setLanguage: (l) => dispatch({ type: 'language', value: l }),
+            setTheme: (v) => dispatch({ type: 'theme', value: v }),
             upsertExam: (exam) => dispatch({ type: 'upsertExam', exam }),
             addExams: (exams) => dispatch({ type: 'addExams', exams }),
             deleteExam: (id) => dispatch({ type: 'deleteExam', id }),

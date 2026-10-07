@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import Animated, { FadeIn, LinearTransition } from 'react-native-reanimated';
+import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AnimatedNumber, enter, PressableScale } from '../../components/motion';
+import { AnimatedNumber, enter, PressableScale, LAYOUT } from '../../components/motion';
 import { BackButton } from '../../components/ui';
 import { neededAverage } from '../../engine/needed';
 import { decimalSeparator, formatNumber } from '../../i18n';
@@ -53,7 +53,7 @@ export const NeededScreen = () => {
                     <BackButton label={t('back')} tint="rgba(20,20,31,0.12)" />
                     <Text style={styles.h1}>{t('needTitle')}</Text>
                 </View>
-                <Animated.View entering={enter(0)} layout={LinearTransition.springify()} style={styles.result}>
+                <Animated.View entering={enter(0)} layout={LAYOUT} style={styles.result}>
                     {r ? (
                         <>
                             <Text style={styles.intro}>{t('needIntro', { target: formatNumber(lang, target, 2), cfu })}</Text>
@@ -99,7 +99,7 @@ export const NeededScreen = () => {
                 </Animated.View>
                 {r && r.verdict !== 'guaranteed' && (
                     <Animated.View entering={enter(4)} style={styles.tip}>
-                        <Text style={{ fontFamily: F.body, fontSize: 14, lineHeight: 20, color: '#2A1A99' }}>
+                        <Text style={{ fontFamily: F.body, fontSize: 14, lineHeight: 20, color: C.violetDeep }}>
                             <Text style={{ fontFamily: F.bold }}>{t('inPractice')}</Text> {t('tipText', { n: exams, v: r.verdict === 'impossible' ? '30+' : formatNumber(lang, shown, 1) })}{' '}
                             {t('lodeNote', { v: rule.average.lodeValue })}
                         </Text>

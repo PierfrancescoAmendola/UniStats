@@ -42,11 +42,18 @@ export const AddExamScreen = ({ navigation, route }: ScreenProps<'AddExam'>) => 
         const after = computeAverage([...others, draft], rule).avg30;
         const before = computeAverage(others, rule).avg30;
         return { after, before };
+        // The draft is rebuilt every render: depend on its fields, not on the object.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.exams, rule, draft.id, draft.grade, draft.lode, draft.cfu]);
     const delta = preview.after !== null && preview.before !== null ? preview.after - preview.before : null;
 
+    const saved = useRef(false);
     const save = () => {
-        const exam: Exam = { ...draft, id: existing?.id ?? newId(), name: nameRef.current.trim() };
+        // One save per screen, and never without a name (a fast double tap would add the exam twice).
+        const name = nameRef.current.trim();
+        if (!name || saved.current) return;
+        saved.current = true;
+        const exam: Exam = { ...draft, id: existing?.id ?? newId(), name };
         upsertExam(exam);
         if (existing) navigation.goBack();
         else navigation.replace('Milestone', { examId: exam.id, before: avg.avg30 });
@@ -81,6 +88,8 @@ export const AddExamScreen = ({ navigation, route }: ScreenProps<'AddExam'>) => 
                         accessibilityLabel={t('examName')}
                         style={styles.input}
                         autoFocus={!existing}
+                        autoCorrect={false}
+                        autoCapitalize="words"
                         returnKeyType="done"
                     />
                 </View>
@@ -139,7 +148,7 @@ export const AddExamScreen = ({ navigation, route }: ScreenProps<'AddExam'>) => 
                     <View style={{ flexDirection: 'row', gap: 6 }}>
                         {[3, 6, 9, 12].map((c) => (
                             <PressableScale key={c} onPress={() => setCfu(c)} style={[styles.quick, cfu === c && { backgroundColor: C.sun }]}>
-                                <Text style={styles.quickTxt}>{t('cfuN', { n: c })}</Text>
+                                <Text style={[styles.quickTxt, cfu === c && { color: C.ink }]}>{t('cfuN', { n: c })}</Text>
                             </PressableScale>
                         ))}
                     </View>
@@ -202,7 +211,7 @@ export const AddExamScreen = ({ navigation, route }: ScreenProps<'AddExam'>) => 
 };
 
 const styles = themed(() => StyleSheet.create({
-    grabber: { width: 40, height: 5, borderRadius: 3, backgroundColor: '#C9C7D6', alignSelf: 'center', marginTop: 10 },
+    grabber: { width: 40, height: 5, borderRadius: 3, backgroundColor: C.text4, alignSelf: 'center', marginTop: 10 },
     top: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 8 },
     cancel: { fontFamily: F.semi, fontSize: 16, color: C.violet },
     title: { fontFamily: F.display, fontSize: 20, color: C.text },

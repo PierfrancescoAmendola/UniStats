@@ -2,9 +2,9 @@ import { CommonActions } from '@react-navigation/native';
 import { Minus, Pencil, Plus } from 'lucide-react-native';
 import React, { useRef } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import Animated, { FadeIn, LinearTransition } from 'react-native-reanimated';
+import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { enter, PressableScale } from '../../components/motion';
+import { enter, PressableScale, LAYOUT } from '../../components/motion';
 import { PrimaryButton, ProgressHeader } from '../../components/ui';
 import { findUniversity, UNIVERSITIES } from '../../data/universities';
 import { NATIONAL_DEFAULTS, presetsFor } from '../../data/presets';
@@ -115,7 +115,7 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
                     </View>
                 </Animated.View>
 
-                <Animated.View entering={enter(4)} layout={LinearTransition.springify()} style={styles.dark}>
+                <Animated.View entering={enter(4)} layout={LAYOUT} style={styles.dark}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                         <View style={[styles.mono, { backgroundColor: color }]}>
                             <Text style={styles.monoTxt}>{uni?.short ?? 'IT'}</Text>
@@ -160,7 +160,7 @@ const styles = themed(() => StyleSheet.create({
     ruleChipTxt: { fontFamily: F.semi, fontSize: 14, color: C.text },
     dark: { backgroundColor: C.ink, borderRadius: 26, padding: 18 },
     mono: { width: 36, height: 36, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
-    monoTxt: { fontFamily: F.display, fontSize: 13, color: C.text },
+    monoTxt: { fontFamily: F.display, fontSize: 13, color: C.ink },
     darkTitle: { fontFamily: F.bold, fontSize: 15, color: C.white },
     darkSub: { fontFamily: F.body, fontSize: 13, color: C.text4 },
     line: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 11, borderTopWidth: 1, borderTopColor: C.inkLine, gap: 12 },

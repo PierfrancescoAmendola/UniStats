@@ -2,25 +2,43 @@ import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
 import { LayoutChangeEvent, Pressable, PressableProps, StyleProp, StyleSheet, TextInput, TextStyle, View, ViewStyle } from 'react-native';
 import Animated, {
+    Easing,
     FadeInDown,
     interpolateColor,
+    LinearTransition,
     useAnimatedProps,
     useAnimatedStyle,
     useSharedValue,
     withDelay,
     withSpring,
     withTiming,
+    ZoomIn,
 } from 'react-native-reanimated';
 import { C, F, themed } from '../theme/tokens';
 
-export const SPRING = { damping: 18, stiffness: 220, mass: 0.8 };
+// Near-critically damped: settles fast with at most a hint of overshoot.
+export const SPRING = { damping: 22, stiffness: 240, mass: 0.8 };
+
+const EASE_OUT = Easing.out(Easing.cubic);
 
 export const tap = () => {
     Haptics.selectionAsync().catch(() => undefined);
 };
 
 /** Staggered entrance used by every screen section. */
-export const enter = (i: number) => FadeInDown.duration(420).delay(60 + i * 55).springify().damping(18);
+export const enter = (i: number) => rise(40 + Math.min(i, 8) * 45);
+
+/** Single fade-and-rise, no bounce. */
+export const rise = (delay = 0) => FadeInDown.duration(320).delay(delay).easing(EASE_OUT);
+
+/** Small badges/checks popping in: one soft overshoot, then still. */
+export const pop = (delay = 0) => ZoomIn.delay(delay).springify().damping(16).stiffness(260);
+
+/** Reserved for a celebratory moment: a single visible bounce. */
+export const celebrate = (delay = 0) => ZoomIn.delay(delay).springify().damping(12).stiffness(200);
+
+/** Layout shifts (rows added/removed, sections resizing): quick and flat. */
+export const LAYOUT = LinearTransition.duration(220).easing(EASE_OUT);
 
 type ScaleProps = Omit<PressableProps, 'style'> & {
     style?: StyleProp<ViewStyle>;
@@ -185,9 +203,9 @@ export function Segmented<T extends string>({ options, value, onChange }: { opti
 const styles = themed(() => StyleSheet.create({
     number: { padding: 0, margin: 0, color: C.text, fontFamily: F.display, includeFontPadding: false },
     track: { width: 50, height: 30, borderRadius: 15, padding: 3, justifyContent: 'center' },
-    knob: { width: 24, height: 24, borderRadius: 12, backgroundColor: C.surface },
-    seg: { flexDirection: 'row', backgroundColor: C.fogDeep, borderRadius: 16, padding: 4 },
-    segInd: { position: 'absolute', top: 4, left: 4, bottom: 4, borderRadius: 12, backgroundColor: C.surface },
+    knob: { width: 24, height: 24, borderRadius: 12, backgroundColor: C.white },
+    seg: { flexDirection: 'row', backgroundColor: C.segTrack, borderRadius: 16, padding: 4 },
+    segInd: { position: 'absolute', top: 4, left: 4, bottom: 4, borderRadius: 12, backgroundColor: C.segInd },
     segBtn: { flex: 1, height: 38, alignItems: 'center', justifyContent: 'center' },
     segTxt: { fontFamily: F.bold, fontSize: 14, color: C.text },
 }));

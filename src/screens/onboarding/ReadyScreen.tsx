@@ -3,9 +3,9 @@ import * as Haptics from 'expo-haptics';
 import { Check, FileUp, Plus } from 'lucide-react-native';
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Animated, { FadeInDown, ZoomIn } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { enter, PressableScale } from '../../components/motion';
+import { enter, PressableScale, rise, pop, celebrate } from '../../components/motion';
 import { findUniversity } from '../../data/universities';
 import { RootParams, ScreenProps } from '../../navigation/types';
 import { useApp } from '../../store/AppStore';
@@ -32,8 +32,8 @@ export const ReadyScreen = ({ navigation }: ScreenProps<'Ready'>) => {
 
     return (
         <View style={[styles.root, { paddingTop: insets.top + 50, paddingBottom: insets.bottom + 16 }]}>
-            <Animated.View entering={ZoomIn.duration(700).springify().damping(12)} style={styles.sunBlob} />
-            <Animated.View entering={ZoomIn.delay(150).springify().damping(10)} style={styles.checkTile}>
+            <Animated.View entering={pop()} style={styles.sunBlob} />
+            <Animated.View entering={celebrate(150)} style={styles.checkTile}>
                 <Check size={36} strokeWidth={2.8} color={L.greenText} />
             </Animated.View>
             <Animated.View entering={enter(2)} style={{ gap: 10, marginTop: 18 }}>
@@ -42,7 +42,7 @@ export const ReadyScreen = ({ navigation }: ScreenProps<'Ready'>) => {
             </Animated.View>
             <View style={{ flex: 1 }} />
             <View style={{ gap: 12 }}>
-                <Animated.View entering={FadeInDown.delay(350).springify()}>
+                <Animated.View entering={rise(350)}>
                     <PressableScale onPress={() => finish('ImportPdf')} style={[styles.option, { backgroundColor: L.white }]}>
                         <View style={[styles.icon, { backgroundColor: L.violet }]}>
                             <FileUp size={26} strokeWidth={2} color={L.white} />
@@ -56,7 +56,7 @@ export const ReadyScreen = ({ navigation }: ScreenProps<'Ready'>) => {
                         </View>
                     </PressableScale>
                 </Animated.View>
-                <Animated.View entering={FadeInDown.delay(430).springify()}>
+                <Animated.View entering={rise(430)}>
                     <PressableScale onPress={() => finish('AddExam')} style={[styles.option, { backgroundColor: 'rgba(255,255,255,0.55)' }]}>
                         <View style={[styles.icon, { backgroundColor: L.ink }]}>
                             <Plus size={26} strokeWidth={2.4} color={L.white} />
@@ -67,7 +67,7 @@ export const ReadyScreen = ({ navigation }: ScreenProps<'Ready'>) => {
                         </View>
                     </PressableScale>
                 </Animated.View>
-                <Animated.View entering={FadeInDown.delay(510).springify()}>
+                <Animated.View entering={rise(510)}>
                     <PressableScale onPress={() => finish()} style={{ padding: 12 }}>
                         <Text style={styles.later}>{t('later')}</Text>
                     </PressableScale>

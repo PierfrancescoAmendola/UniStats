@@ -20,9 +20,9 @@ export const BackButton = ({ onDark = false, tint, label, onPress }: { onDark?: 
         <PressableScale
             accessibilityLabel={label}
             onPress={onPress ?? (() => nav.goBack())}
-            style={[s.back, { backgroundColor: tint ?? (onDark ? 'rgba(255,255,255,0.16)' : C.white) }]}
+            style={[s.back, { backgroundColor: tint ?? (onDark ? 'rgba(255,255,255,0.16)' : C.surface) }]}
         >
-            <ChevronLeft size={22} strokeWidth={2.4} color={onDark ? C.white : C.ink} />
+            <ChevronLeft size={22} strokeWidth={2.4} color={onDark ? C.white : tint ? C.ink : C.text} />
         </PressableScale>
     );
 };

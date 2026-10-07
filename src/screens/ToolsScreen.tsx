@@ -46,7 +46,7 @@ export const ToolsScreen = () => {
                 </Animated.View>
                 <Animated.View entering={enter(3)} style={{ flex: 1 }}>
                     <PressableScale onPress={() => nav.navigate('WhatIf')} style={[styles.half, { backgroundColor: C.violet }]}>
-                        <View style={[styles.icon, { backgroundColor: C.surface }]}>
+                        <View style={[styles.icon, { backgroundColor: C.white }]}>
                             <TrendingUp size={22} strokeWidth={2.2} color={C.violet} />
                         </View>
                         <View style={{ flex: 1 }} />
@@ -79,10 +79,10 @@ const styles = themed(() => StyleSheet.create({
     big: { borderRadius: 28, padding: 18, gap: 10, minHeight: 170, overflow: 'hidden' },
     ghost: { position: 'absolute', right: -8, bottom: -48, fontFamily: F.display, fontSize: 120, color: C.sunDeep, opacity: 0.85 },
     icon: { width: 44, height: 44, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
-    bigTitle: { fontFamily: F.display, fontSize: 26, lineHeight: 28, color: C.text },
-    bigSub: { fontFamily: F.body, fontSize: 14, color: C.text },
+    bigTitle: { fontFamily: F.display, fontSize: 26, lineHeight: 28, color: C.ink },
+    bigSub: { fontFamily: F.body, fontSize: 14, color: C.ink },
     half: { borderRadius: 28, padding: 16, gap: 8, height: 200 },
-    halfTitle: { fontFamily: F.display, fontSize: 22, lineHeight: 24, color: C.text },
-    halfSub: { fontFamily: F.body, fontSize: 13, lineHeight: 18, color: C.text },
+    halfTitle: { fontFamily: F.display, fontSize: 22, lineHeight: 24, color: C.ink },
+    halfSub: { fontFamily: F.body, fontSize: 13, lineHeight: 18, color: C.ink },
     row: { backgroundColor: C.surface, borderRadius: 24, padding: 16, flexDirection: 'row', alignItems: 'center', gap: 12 },
 }));

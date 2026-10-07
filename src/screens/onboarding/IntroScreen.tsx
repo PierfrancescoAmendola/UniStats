@@ -40,7 +40,10 @@ const Parallax = ({ x, i, w, speed, style, children }: { x: SharedValue<number>;
     return <Animated.View style={[style, a]}>{children}</Animated.View>;
 };
 
-export const IntroScreen = ({ navigation }: ScreenProps<'Intro'>) => {
+export const IntroScreen = ({ navigation, route }: ScreenProps<'Intro'>) => {
+    // Replayed from Profile: the last step and Skip simply close the tour.
+    const replay = !!route.params?.replay;
+    const leave = () => (replay ? navigation.goBack() : navigation.navigate('Level'));
     const { t, lang, state, setProfile, addExams, setOnboarded } = useApp();
     // Development only: long-press the brand to load the demo transcript and skip onboarding.
     const seedDemo = () => {
@@ -75,8 +78,8 @@ export const IntroScreen = ({ navigation }: ScreenProps<'Intro'>) => {
         pageRef.current = p;
         setPage(p);
     };
-    const next = () => (pageRef.current < 2 ? goTo(pageRef.current + 1) : navigation.navigate('Level'));
-    const cta = [t('onb1Cta'), t('next'), t('onb3Cta')][page];
+    const next = () => (pageRef.current < 2 ? goTo(pageRef.current + 1) : leave());
+    const cta = [t('onb1Cta'), t('next'), replay ? t('close') : t('onb3Cta')][page];
 
     return (
         <Animated.View style={[{ flex: 1 }, bg]}>
@@ -85,7 +88,7 @@ export const IntroScreen = ({ navigation }: ScreenProps<'Intro'>) => {
                 {page > 0 ? <BackButton label={t('back')} onPress={() => goTo(page - 1)} tint="rgba(20,20,31,0.08)" /> : <Text style={styles.brand} onLongPress={seedDemo}>
                         {t('appName')}
                     </Text>}
-                <PressableScale onPress={() => navigation.navigate('Level')} style={{ padding: 10 }}>
+                <PressableScale onPress={leave} style={{ padding: 10 }}>
                     <Animated.Text style={[styles.skip, skipTxt]}>{t('skip')}</Animated.Text>
                 </PressableScale>
             </View>

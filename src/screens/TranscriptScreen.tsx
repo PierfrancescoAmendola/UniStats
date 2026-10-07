@@ -2,9 +2,9 @@ import { useNavigation } from '@react-navigation/native';
 import { ChevronRight, FileUp } from 'lucide-react-native';
 import React, { useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { enter, PressableScale, Segmented } from '../components/motion';
+import { enter, PressableScale, Segmented, LAYOUT } from '../components/motion';
 import { GradeBadge } from '../components/ui';
 import { formatDate } from '../i18n';
 import { TAB_SPACE } from '../navigation/TabBar';
@@ -62,10 +62,10 @@ export const TranscriptScreen = () => {
                 </Animated.Text>
             )}
             {groups.map((g, gi) => (
-                <Animated.View key={g.year} layout={LinearTransition.springify().damping(18)} entering={enter(3 + gi)} style={{ gap: 8 }}>
+                <Animated.View key={g.year} layout={LAYOUT} entering={enter(3 + gi)} style={{ gap: 8 }}>
                     <Text style={styles.year}>{t('yearN', { n: g.year })}</Text>
                     {g.exams.map((e) => (
-                        <Animated.View key={e.id} layout={LinearTransition.springify().damping(18)} entering={FadeIn.duration(220)} exiting={FadeOut.duration(150)}>
+                        <Animated.View key={e.id} layout={LAYOUT} entering={FadeIn.duration(220)} exiting={FadeOut.duration(150)}>
                             <PressableScale onPress={() => nav.navigate('ExamDetail', { examId: e.id })} style={styles.row}>
                                 <GradeBadge tier={tierOf(e.grade, e.lode)} label={e.grade === null ? t('passFailShort') : e.lode ? '30L' : String(e.grade)} size={44} fontSize={e.grade === null ? 13 : 17} />
                                 <View style={{ flex: 1 }}>

@@ -66,7 +66,7 @@ export const TabBar = ({ state, navigation }: BottomTabBarProps) => {
             <View style={styles.bar}>
                 {items.slice(0, 2)}
                 <PressableScale accessibilityLabel={t('addExam')} scaleTo={0.88} onPress={() => navigation.getParent()?.navigate('AddExam')} style={styles.fab}>
-                    <Plus size={24} strokeWidth={2.6} color={C.text} />
+                    <Plus size={24} strokeWidth={2.6} color={C.ink} />
                 </PressableScale>
                 {items.slice(2)}
             </View>
