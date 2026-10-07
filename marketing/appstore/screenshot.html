@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>UniStats screenshot</title>
+<style>
+@font-face { font-family: 'Bricolage'; font-weight: 800; src: url('fonts/BricolageGrotesque_800ExtraBold.ttf'); }
+@font-face { font-family: 'Figtree'; font-weight: 600; src: url('fonts/Figtree_600SemiBold.ttf'); }
+@font-face { font-family: 'Figtree'; font-weight: 700; src: url('fonts/Figtree_700Bold.ttf'); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1320px; height: 2868px; overflow: hidden; }
+#stage { position: relative; width: 1320px; height: 2868px; overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; }
+.spark { position: absolute; transform: translate(-50%, -50%); }
+#copy { position: absolute; top: 200px; left: 70px; right: 70px; text-align: center; }
+#h1 { font-family: 'Bricolage'; font-weight: 800; font-size: 128px; line-height: 1.02; letter-spacing: -0.035em; }
+#sub { font-family: 'Figtree'; font-weight: 600; font-size: 50px; line-height: 1.25; margin-top: 30px; opacity: .92; }
+#phone {
+    position: absolute; left: 50%; top: 760px; width: 1030px; transform: translateX(-50%);
+    padding: 22px; border-radius: 172px; background: #0B0B10;
+    box-shadow: 0 60px 120px rgba(10, 6, 40, .35), 0 0 0 6px rgba(255,255,255,.10);
+}
+#phone img { display: block; width: 100%; border-radius: 150px; }
+#island { position: absolute; left: 50%; transform: translateX(-50%); background: #000; border-radius: 999px; }
+.chip {
+    position: absolute; display: flex; align-items: center; gap: 22px; white-space: nowrap;
+    padding: 30px 44px 30px 32px; border-radius: 999px; background: #fff; color: #14141F;
+    font-family: 'Figtree'; font-weight: 700; font-size: 46px;
+    box-shadow: 0 24px 50px rgba(10, 6, 40, .28); transform: rotate(var(--r));
+}
+.chip i { width: 30px; height: 30px; border-radius: 50%; display: block; flex: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+    <div id="copy"><div id="h1"></div><div id="sub"></div></div>
+    <div id="phone"><img id="shot"><div id="island"></div></div>
+</div>
+<script>
+const C = { violet: '#5A3FFF', sun: '#FFC93C', coral: '#FF6B57', mint: '#1FB57A', ink: '#14141F', white: '#FFFFFF', pop: '#8EF0C4', lilac: '#B9AEFF' };
+
+// Per screen: background, text colour, highlight colour, decoration colour, chip dots and chip positions [left|right px, top px, rotation].
+const LOOK = {
+    home: { bg: 'linear-gradient(160deg, #6E55FF 0%, #5A3FFF 45%, #4326E8 100%)', fg: C.white, hl: C.sun, deco: 'rgba(255,255,255,.08)', dots: [C.mint, C.sun], chips: [['right', 30, 1575, 4], ['left', 36, 2235, -4]] },
+    grad: { bg: 'linear-gradient(160deg, #FFD45E 0%, #FFC93C 50%, #F7B21F 100%)', fg: C.ink, hl: C.violet, deco: 'rgba(255,255,255,.28)', dots: [C.violet], chips: [['left', 36, 2075, -4]] },
+    needed: { bg: 'linear-gradient(160deg, #FF8270 0%, #FF6B57 50%, #F2533F 100%)', fg: C.white, hl: C.ink, deco: 'rgba(255,255,255,.12)', dots: [C.mint], chips: [['right', 30, 1500, 4]] },
+    whatif: { bg: 'linear-gradient(165deg, #241A6B 0%, #3E25D9 55%, #5A3FFF 100%)', fg: C.white, hl: C.pop, deco: 'rgba(255,255,255,.07)', dots: [C.sun], chips: [['right', 40, 1420, 4]] },
+    transcript: { bg: 'linear-gradient(160deg, #2FC98A 0%, #1FB57A 50%, #12996A 100%)', fg: C.white, hl: C.ink, deco: 'rgba(255,255,255,.12)', dots: [C.violet], chips: [['right', 30, 1265, 4]] },
+    exam: { bg: 'linear-gradient(165deg, #1E1E2E 0%, #14141F 60%, #0D0D16 100%)', fg: C.white, hl: C.sun, deco: 'rgba(90,63,255,.22)', dots: [C.sun], chips: [['right', 30, 1385, 4]] },
+    how: { bg: 'linear-gradient(165deg, #F7F6FC 0%, #EDEAFB 60%, #E2DCFF 100%)', fg: C.ink, hl: C.violet, deco: 'rgba(90,63,255,.08)', dots: [C.coral], chips: [['right', 30, 1050, 4]] },
+    dark: { bg: 'radial-gradient(ellipse 80% 45% at 50% 105%, rgba(90,63,255,.55), rgba(90,63,255,0) 70%), linear-gradient(170deg, #12121C 0%, #0A0A11 100%)', fg: C.white, hl: C.lilac, deco: 'rgba(185,174,255,.08)', dots: [C.lilac], chips: [['right', 40, 1500, 4]] },
+};
+
+const q = new URLSearchParams(location.search);
+const shot = q.get('shot') || 'home';
+const lang = q.get('lang') || 'it';
+const look = LOOK[shot];
+
+// file:// pages cannot use fetch(); a synchronous XHR works with --allow-file-access-from-files.
+const load = (path) => { const x = new XMLHttpRequest(); x.open('GET', path, false); x.send(); return JSON.parse(x.responseText); };
+(() => {
+    const all = load('copy.json');
+    const copy = all[lang][shot];
+    const stage = document.getElementById('stage');
+    stage.style.background = look.bg;
+    document.documentElement.lang = lang;
+
+    // Soft circles and sparkles, same language as the app's onboarding.
+    for (const [x, y, d] of [[-160, 320, 640], [1090, 1180, 560], [-120, 2350, 520]]) {
+        const b = document.createElement('div');
+        b.className = 'blob';
+        Object.assign(b.style, { left: x + 'px', top: y + 'px', width: d + 'px', height: d + 'px', background: look.deco });
+        stage.prepend(b);
+    }
+    for (const [x, y, s] of [[130, 150, 60], [1190, 110, 70], [1215, 620, 44], [95, 700, 40]]) {
+        const el = document.createElement('div');
+        el.className = 'spark';
+        Object.assign(el.style, { left: x + 'px', top: y + 'px', width: s + 'px', height: s + 'px' });
+        el.innerHTML = `<svg viewBox="0 0 100 100" width="100%" height="100%"><path d="M50 0 Q56 44 100 50 Q56 56 50 100 Q44 56 0 50 Q44 44 50 0 Z" fill="${look.fg}" opacity=".55"/></svg>`;
+        stage.appendChild(el);
+    }
+
+    const h1 = document.getElementById('h1');
+    h1.style.color = look.fg;
+    h1.innerHTML = `${copy.h[0]}<br><span style="color:${look.hl}">${copy.h[1]}</span>`;
+    const sub = document.getElementById('sub');
+    sub.style.color = look.fg;
+    sub.textContent = copy.sub;
+
+    const img = document.getElementById('shot');
+    img.src = `raw/${lang}/${shot}.png`;
+    const loaded = new Promise((ok) => (img.onload = () => {
+        // Dynamic Island drawn on top: the simulator does not always include it in captures.
+        const k = img.clientWidth / 1206;
+        Object.assign(document.getElementById('island').style, { top: 22 + 40 * k + 'px', width: 378 * k + 'px', height: 110 * k + 'px' });
+        ok();
+    }));
+
+    copy.chips.forEach((text, i) => {
+        const [side, offset, top, rot] = look.chips[i];
+        const c = document.createElement('div');
+        c.className = 'chip';
+        c.style[side] = offset + 'px';
+        c.style.top = top + 'px';
+        c.style.setProperty('--r', rot + 'deg');
+        c.innerHTML = `<i style="background:${look.dots[i]}"></i>${text}`;
+        stage.appendChild(c);
+    });
+
+    // Shrink long headlines (German, French) until they fit in two lines.
+    const fitted = document.fonts.ready.then(() => {
+        let size = 128;
+        while ((h1.offsetHeight > size * 1.02 * 2.05 || h1.scrollWidth > h1.clientWidth) && size > 70) {
+            size -= 4;
+            h1.style.fontSize = size + 'px';
+        }
+    });
+    Promise.all([loaded, fitted]).then(() => (document.title = 'ready'));
+})();
+</script>
+</body>
+</html>

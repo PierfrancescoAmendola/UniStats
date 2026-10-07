@@ -1,0 +1,34 @@
+{
+    "profile": {
+        "level": "L",
+        "years": 3,
+        "totalCfu": 180,
+        "universityId": "sapienza",
+        "cohort": 2025,
+        "ruleId": "sapienza-econ-L",
+        "customRule": null,
+        "thesisPoints": 2,
+        "bonusInput": { "onTime": true },
+        "targetAverage": 28.5
+    },
+    "people": {
+        "it": { "name": "Giulia", "course": "Economia e Management" },
+        "en": { "name": "Emma", "course": "Economics and Management" },
+        "es": { "name": "Lucía", "course": "Economía y Gestión" },
+        "fr": { "name": "Léa", "course": "Économie et Gestion" },
+        "de": { "name": "Lena", "course": "Wirtschaft und Management" },
+        "pt": { "name": "Sofia", "course": "Economia e Gestão" }
+    },
+    "exams": [
+        { "id": "s01", "grade": 30, "lode": true, "cfu": 9, "date": "2026-01-20", "year": 1, "name": { "it": "Economia aziendale", "en": "Business Economics", "es": "Economía de la Empresa", "fr": "Économie d’entreprise", "de": "Betriebswirtschaft", "pt": "Economia Empresarial" } },
+        { "id": "s02", "grade": 27, "lode": false, "cfu": 12, "date": "2026-02-10", "year": 1, "name": { "it": "Matematica generale", "en": "Mathematics", "es": "Matemáticas", "fr": "Mathématiques", "de": "Mathematik", "pt": "Matemática" } },
+        { "id": "s03", "grade": 29, "lode": false, "cfu": 9, "date": "2026-02-24", "year": 1, "name": { "it": "Microeconomia", "en": "Microeconomics", "es": "Microeconomía", "fr": "Microéconomie", "de": "Mikroökonomie", "pt": "Microeconomia" } },
+        { "id": "s04", "grade": null, "lode": false, "cfu": 6, "date": "2026-03-05", "year": 1, "name": { "it": "Lingua inglese B2", "en": "English B2", "es": "Inglés B2", "fr": "Anglais B2", "de": "Englisch B2", "pt": "Inglês B2" } },
+        { "id": "s05", "grade": 28, "lode": false, "cfu": 9, "date": "2026-06-18", "year": 1, "name": { "it": "Diritto privato", "en": "Private Law", "es": "Derecho Privado", "fr": "Droit privé", "de": "Privatrecht", "pt": "Direito Privado" } },
+        { "id": "s06", "grade": 26, "lode": false, "cfu": 9, "date": "2026-07-02", "year": 1, "name": { "it": "Statistica", "en": "Statistics", "es": "Estadística", "fr": "Statistique", "de": "Statistik", "pt": "Estatística" } },
+        { "id": "s07", "grade": 30, "lode": false, "cfu": 9, "date": "2026-07-16", "year": 1, "name": { "it": "Ragioneria", "en": "Accounting", "es": "Contabilidad", "fr": "Comptabilité", "de": "Rechnungswesen", "pt": "Contabilidade" } },
+        { "id": "s08", "grade": 28, "lode": false, "cfu": 9, "date": "2026-09-08", "year": 2, "name": { "it": "Macroeconomia", "en": "Macroeconomics", "es": "Macroeconomía", "fr": "Macroéconomie", "de": "Makroökonomie", "pt": "Macroeconomia" } },
+        { "id": "s09", "grade": 30, "lode": false, "cfu": 6, "date": "2026-09-22", "year": 2, "name": { "it": "Marketing", "en": "Marketing", "es": "Marketing", "fr": "Marketing", "de": "Marketing", "pt": "Marketing" } },
+        { "id": "s10", "grade": 29, "lode": false, "cfu": 9, "date": "2026-10-02", "year": 2, "name": { "it": "Finanza aziendale", "en": "Corporate Finance", "es": "Finanzas Corporativas", "fr": "Finance d’entreprise", "de": "Unternehmensfinanzierung", "pt": "Finanças Empresariais" } }
+    ]
+}
