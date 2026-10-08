@@ -7,7 +7,7 @@ import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, StyleShe
 import Animated, { FadeIn, FadeInDown, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enter, PressableScale, rise, pop } from '../components/motion';
-import { BackButton, GradeBadge, PrimaryButton } from '../components/ui';
+import { BackButton, dismissKeyboardOnTap, GradeBadge, PrimaryButton } from '../components/ui';
 import { Exam } from '../engine/types';
 import { formatDate } from '../i18n';
 import { ScreenProps } from '../navigation/types';
@@ -81,8 +81,8 @@ export const ImportPdfScreen = ({ navigation }: ScreenProps<'ImportPdf'>) => {
     };
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-            <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ paddingTop: insets.top + 12, paddingHorizontal: 20, paddingBottom: 20, gap: 12 }}>
+        <KeyboardAvoidingView {...dismissKeyboardOnTap} style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" contentContainerStyle={{ paddingTop: insets.top + 12, paddingHorizontal: 20, paddingBottom: 20, gap: 12 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
                     <BackButton label={t('back')} />
                     <Text style={styles.h1}>{t('importTitle')}</Text>

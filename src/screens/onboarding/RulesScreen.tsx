@@ -5,7 +5,7 @@ import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enter, PressableScale, LAYOUT } from '../../components/motion';
-import { PrimaryButton, ProgressHeader } from '../../components/ui';
+import { dismissKeyboardOnTap, PrimaryButton, ProgressHeader } from '../../components/ui';
 import { findUniversity, UNIVERSITIES } from '../../data/universities';
 import { NATIONAL_DEFAULTS, presetsFor } from '../../data/presets';
 import { ScreenProps } from '../../navigation/types';
@@ -49,9 +49,9 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
     );
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <KeyboardAvoidingView {...dismissKeyboardOnTap} style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <ScrollView
-                keyboardShouldPersistTaps="handled"
+                keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive"
                 contentContainerStyle={{ paddingTop: insets.top + 12, paddingHorizontal: 24, paddingBottom: 24, gap: 14 }}
             >
                 <ProgressHeader step={3} total={3} label={t('stepOf', { n: 3, total: 3 })} backLabel={t('back')} />

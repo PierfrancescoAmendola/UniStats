@@ -83,7 +83,7 @@ export const ExamDetailScreen = ({ navigation, route }: ScreenProps<'ExamDetail'
     );
 
     return (
-        <ScrollView style={{ backgroundColor: C.fog }} contentContainerStyle={{ paddingBottom: insets.bottom + 24 }} keyboardShouldPersistTaps="handled">
+        <ScrollView style={{ backgroundColor: C.fog }} contentContainerStyle={{ paddingBottom: insets.bottom + 24 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive">
             <View style={[styles.head, { backgroundColor: head.bg, paddingTop: insets.top + 12 }]}>
                 <View style={[styles.blob, { backgroundColor: head.blob }]} />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

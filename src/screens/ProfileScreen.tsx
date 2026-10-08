@@ -1,6 +1,6 @@
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import Constants from 'expo-constants';
-import { Check, ChevronRight, FileText, GraduationCap, Languages, ListChecks, Mail, PlayCircle, ShieldCheck } from 'lucide-react-native';
+import { Check, ChevronRight, FileText, GraduationCap, Languages, Heart, ListChecks, Mail, PlayCircle, ShieldCheck, Star } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { Alert, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
@@ -9,6 +9,7 @@ import { enter, PressableScale, pop, LAYOUT } from '../components/motion';
 import { findUniversity } from '../data/universities';
 import { Language, LANGUAGES } from '../i18n';
 import { SUPPORT_EMAIL } from '../i18n/legal';
+import { REVIEW_URL } from '../config/store';
 import { TAB_SPACE } from '../navigation/TabBar';
 import { ThemePref, useApp } from '../store/AppStore';
 import { C, F, PALETTES, themed } from '../theme/tokens';
@@ -44,7 +45,7 @@ const Swatch = ({ pref }: { pref: ThemePref }) => {
 
 export const ProfileScreen = () => {
     const nav = useNavigation();
-    const { t, state, rule, setLanguage, setTheme, reset } = useApp();
+    const { t, state, rule, setLanguage, setTheme, reset, markNudgeDone } = useApp();
     const insets = useSafeAreaInsets();
     const p = state.profile;
     const uni = findUniversity(p.universityId);
@@ -72,8 +73,12 @@ export const ProfileScreen = () => {
                 <Text style={styles.rowRight} numberOfLines={1}>
                     {right}
                 </Text>
-            ) : null}
-            <ChevronRight size={18} strokeWidth={2.4} color={C.text4} />
+            ) : (
+                <View style={{ flex: 1 }} />
+            )}
+            <View style={{ flexShrink: 0 }}>
+                <ChevronRight size={18} strokeWidth={2.4} color={C.text4} />
+            </View>
         </PressableScale>
     );
 
@@ -175,6 +180,24 @@ export const ProfileScreen = () => {
             </Animated.View>
 
             <Animated.Text entering={enter(8)} style={styles.kicker}>
+                {t('appName')}
+            </Animated.Text>
+            <Animated.View entering={enter(8)} style={styles.group}>
+                {row(<Heart size={18} strokeWidth={2.2} color={C.white} fill={C.white} />, C.coral, t('supportRow'), () => nav.navigate('Support'))}
+                {row(
+                    <Star size={18} strokeWidth={2.2} color={C.ink} fill={C.ink} />,
+                    C.sun,
+                    t('rateRow'),
+                    () => {
+                        markNudgeDone('review');
+                        Linking.openURL(REVIEW_URL).catch(() => undefined);
+                    },
+                    undefined,
+                    true,
+                )}
+            </Animated.View>
+
+            <Animated.Text entering={enter(9)} style={styles.kicker}>
                 {t('infoSection')}
             </Animated.Text>
             <Animated.View entering={enter(9)} style={styles.group}>
@@ -210,8 +233,9 @@ const styles = themed(() => StyleSheet.create({
     row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 14 },
     rowLine: { borderBottomWidth: 1, borderBottomColor: C.line },
     rowIcon: { width: 36, height: 36, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
-    rowTxt: { flex: 1, fontFamily: F.semi, fontSize: 16, color: C.text },
-    rowRight: { fontFamily: F.body, fontSize: 13, color: C.text3, maxWidth: 140 },
+    rowTxt: { flexShrink: 0, maxWidth: '72%', fontFamily: F.semi, fontSize: 16, color: C.text },
+    // The label keeps its width (long German words never break); the value takes what is left.
+    rowRight: { flex: 1, minWidth: 0, textAlign: 'right', fontFamily: F.body, fontSize: 13, color: C.text3 },
     langs: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, paddingHorizontal: 16, paddingTop: 2, paddingBottom: 18 },
     langChip: { paddingHorizontal: 14, paddingVertical: 9, borderRadius: 999, backgroundColor: C.fog },
     langTxt: { fontFamily: F.semi, fontSize: 14, color: C.text },

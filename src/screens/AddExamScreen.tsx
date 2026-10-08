@@ -5,7 +5,7 @@ import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput
 import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AnimatedNumber, PressableScale, Segmented } from '../components/motion';
-import { PrimaryButton } from '../components/ui';
+import { dismissKeyboardOnTap, PrimaryButton } from '../components/ui';
 import { computeAverage } from '../engine/average';
 import { Exam } from '../engine/types';
 import { decimalSeparator, formatDate, formatSigned } from '../i18n';
@@ -65,7 +65,7 @@ export const AddExamScreen = ({ navigation, route }: ScreenProps<'AddExam'>) => 
     };
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1, backgroundColor: C.fog, paddingTop: insets.top }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <KeyboardAvoidingView {...dismissKeyboardOnTap} style={{ flex: 1, backgroundColor: C.fog, paddingTop: insets.top }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <View style={styles.grabber} />
             <View style={styles.top}>
                 <PressableScale onPress={() => navigation.goBack()} style={{ paddingVertical: 8, minWidth: 70 }}>
@@ -74,7 +74,7 @@ export const AddExamScreen = ({ navigation, route }: ScreenProps<'AddExam'>) => 
                 <Text style={styles.title}>{existing ? t('editExam') : t('newExam')}</Text>
                 <View style={{ minWidth: 70 }} />
             </View>
-            <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20, gap: 12 }}>
+            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20, gap: 12 }}>
                 <View style={styles.field}>
                     <Text style={styles.lbl}>{t('examName')}</Text>
                     <TextInput

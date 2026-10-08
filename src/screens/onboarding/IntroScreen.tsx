@@ -198,6 +198,7 @@ export const IntroScreen = ({ navigation, route }: ScreenProps<'Intro'>) => {
             </Animated.ScrollView>
 
             <View style={[styles.bottom, { paddingBottom: insets.bottom + 16 }]}>
+                <View style={styles.bottomInner}>
                 <View style={styles.dots}>
                     {[0, 1, 2].map((i) => (
                         <Dot key={i} i={i} x={x} w={W} />
@@ -209,6 +210,7 @@ export const IntroScreen = ({ navigation, route }: ScreenProps<'Intro'>) => {
                         {page === 0 && <ArrowRight size={20} strokeWidth={2.4} color={L.ink} />}
                     </Animated.View>
                 </PressableScale>
+                </View>
             </View>
         </Animated.View>
     );
@@ -231,9 +233,10 @@ const styles = StyleSheet.create({
     top: { position: 'absolute', left: 24, right: 24, zIndex: 2, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
     brand: { fontFamily: F.display, fontSize: 22, color: L.white },
     skip: { fontFamily: F.semi, fontSize: 15 },
-    page: { flex: 1 },
-    visual: { flex: 1, marginTop: 120 },
-    copy: { paddingHorizontal: 24, gap: 14 },
+    // On iPad each page keeps the phone composition, centred and at most 560 wide.
+    page: { flex: 1, alignItems: 'center' },
+    visual: { flex: 1, marginTop: 120, width: '100%', maxWidth: 560 },
+    copy: { paddingHorizontal: 24, gap: 14, width: '100%', maxWidth: 560 },
     title: { fontFamily: F.display, fontSize: 40, lineHeight: 41, color: L.ink },
     body: { fontFamily: F.body, fontSize: 17, lineHeight: 25, color: L.ink },
     circle: { position: 'absolute', borderRadius: 999 },
@@ -253,7 +256,8 @@ const styles = StyleSheet.create({
     rowNum: { fontFamily: F.display, fontSize: 22 },
     eqCard: { borderRadius: 22, paddingHorizontal: 18, paddingVertical: 16, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
     eqNum: { fontFamily: F.display, fontSize: 30, color: L.ink },
-    bottom: { position: 'absolute', left: 24, right: 24, bottom: 0, gap: 18 },
+    bottom: { position: 'absolute', left: 0, right: 0, bottom: 0, paddingHorizontal: 24, alignItems: 'center' },
+    bottomInner: { width: '100%', maxWidth: 512, gap: 18 },
     dots: { flexDirection: 'row', gap: 6 },
     cta: { height: 58, borderRadius: 20, flexDirection: 'row', gap: 8, alignItems: 'center', justifyContent: 'center' },
     ctaTxt: { fontFamily: F.bold, fontSize: 17 },

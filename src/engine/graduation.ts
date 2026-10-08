@@ -109,7 +109,8 @@ export const computeGraduation = (avg: AverageResult, rule: Rule, thesisInput: n
     }
 
     const rounded = rule.finalRounding === 'none' ? raw : roundWith(raw, rule.finalRounding);
-    const final = Math.min(MAX_GRADE, rounded);
+    // Between 0 and 110: a negative commission (PoliMi, -1) on an empty transcript must not show -1.
+    const final = clamp(rounded, 0, MAX_GRADE);
 
     const l = rule.lode;
     const evalOn = l.evaluatedOn === 'preRounding' ? snap(raw) : rounded;

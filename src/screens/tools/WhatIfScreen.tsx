@@ -72,7 +72,7 @@ export const WhatIfScreen = () => {
     const d = now !== null && after !== null ? after - now : null;
 
     return (
-        <ScrollView style={{ backgroundColor: C.violet }} contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ backgroundColor: C.violet }} contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" showsVerticalScrollIndicator={false}>
             <View style={{ paddingTop: insets.top + 12, paddingHorizontal: 20, paddingBottom: 18, gap: 14 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
                     <BackButton label={t('back')} onDark />

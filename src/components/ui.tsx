@@ -1,11 +1,21 @@
 import { useNavigation } from '@react-navigation/native';
 import { ChevronLeft } from 'lucide-react-native';
 import React from 'react';
-import { StyleProp, StyleSheet, Text, TextProps, TextStyle, View, ViewStyle } from 'react-native';
+import { Keyboard, StyleProp, StyleSheet, Text, TextProps, TextStyle, View, ViewStyle } from 'react-native';
 import { C, F, GradeTier, R, TIER_COLORS, themed } from '../theme/tokens';
 import { PressableScale } from './motion';
 
 type TProps = TextProps & { style?: StyleProp<TextStyle> };
+
+/**
+ * Spread on a screen's root view: a tap that no child handles (empty space, headers, cards)
+ * closes the keyboard. Buttons close it themselves (PressableScale), scroll views use
+ * keyboardShouldPersistTaps="handled" and keyboardDismissMode, so a tap anywhere closes it.
+ */
+export const dismissKeyboardOnTap = {
+    onStartShouldSetResponder: () => true,
+    onResponderRelease: () => Keyboard.dismiss(),
+} as const;
 
 export const Display = ({ style, ...p }: TProps) => <Text {...p} style={[s.display, style]} />;
 export const Body = ({ style, ...p }: TProps) => <Text {...p} style={[s.body, style]} />;

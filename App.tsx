@@ -1,6 +1,6 @@
 import { BricolageGrotesque_600SemiBold, BricolageGrotesque_800ExtraBold } from '@expo-google-fonts/bricolage-grotesque';
 import { Figtree_400Regular, Figtree_500Medium, Figtree_600SemiBold, Figtree_700Bold, useFonts } from '@expo-google-fonts/figtree';
-import { DarkTheme, DefaultTheme, LinkingOptions, NavigationContainer, NavigationState } from '@react-navigation/native';
+import { createNavigationContainerRef, DarkTheme, DefaultTheme, LinkingOptions, NavigationContainer, NavigationState } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
@@ -10,12 +10,16 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated, { FadeOut } from 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { LaunchAnimation } from './src/components/LaunchAnimation';
+import { NudgeHost } from './src/components/NudgeHost';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import { RootParams } from './src/navigation/types';
 import { AppProvider, useApp } from './src/store/AppStore';
+import { TipsProvider } from './src/store/Tips';
 import { applyScheme, C, PALETTES, Scheme } from './src/theme/tokens';
 
 SplashScreen.preventAutoHideAsync().catch(() => undefined);
+
+const navRef = createNavigationContainerRef<RootParams>();
 
 // unistats://profile, unistats://tools/grad, unistats://legal/privacy ...
 const linking: LinkingOptions<RootParams> = {
@@ -37,6 +41,7 @@ const linking: LinkingOptions<RootParams> = {
             HowCalc: 'tools/how',
             RulesEdit: 'rules',
             Legal: 'legal/:doc',
+            Support: 'support',
         },
     },
 };
@@ -75,6 +80,8 @@ const Root = () => {
     // Switching theme remounts the navigation tree (static styles re-read the palette);
     // the navigation state is kept so the user stays on the same screen.
     const navState = useRef<NavigationState | undefined>(undefined);
+    // Name of the screen on top, so pop-ups only appear over Home.
+    const [route, setRoute] = useState<string | undefined>(undefined);
     const [fade, setFade] = useState<{ color: string; id: number } | null>(null);
     const prev = useRef(scheme);
     useLayoutEffect(() => {
@@ -96,21 +103,31 @@ const Root = () => {
     return (
         <>
             <NavigationContainer
+                ref={navRef}
                 key={scheme}
                 theme={navTheme(scheme)}
                 linking={linking}
                 initialState={navState.current}
+                onReady={() => setRoute(navRef.getCurrentRoute()?.name)}
                 onStateChange={(s) => {
                     navState.current = s;
+                    setRoute(navRef.getCurrentRoute()?.name);
                 }}
             >
                 <StatusBar style={launching || scheme === 'dark' ? 'light' : 'dark'} />
                 <RootNavigator />
             </NavigationContainer>
+            <NudgeHost active={!launching && route === 'Home'} onSupport={() => navRef.isReady() && navRef.navigate('Support')} />
             {fade && <Animated.View key={fade.id} pointerEvents="none" exiting={FadeOut.duration(380)} style={[StyleSheet.absoluteFill, { backgroundColor: fade.color }]} />}
             {launching && <LaunchAnimation onDone={() => setLaunching(false)} />}
         </>
     );
+};
+
+/** Donations: a successful tip also stops the donation pop-up for good. */
+const Tipped = ({ children }: { children: React.ReactNode }) => {
+    const { markNudgeDone } = useApp();
+    return <TipsProvider onThanks={() => markNudgeDone('tip')}>{children}</TipsProvider>;
 };
 
 export default function App() {
@@ -118,7 +135,9 @@ export default function App() {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaProvider>
                 <AppProvider>
-                    <Root />
+                    <Tipped>
+                        <Root />
+                    </Tipped>
                 </AppProvider>
             </SafeAreaProvider>
         </GestureHandlerRootView>

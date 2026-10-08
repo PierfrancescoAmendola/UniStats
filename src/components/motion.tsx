@@ -1,6 +1,6 @@
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useState } from 'react';
-import { LayoutChangeEvent, Pressable, PressableProps, StyleProp, StyleSheet, TextInput, TextStyle, View, ViewStyle } from 'react-native';
+import { Keyboard, LayoutChangeEvent, Pressable, PressableProps, StyleProp, StyleSheet, TextInput, TextStyle, View, ViewStyle } from 'react-native';
 import Animated, {
     Easing,
     FadeInDown,
@@ -44,11 +44,13 @@ type ScaleProps = Omit<PressableProps, 'style'> & {
     style?: StyleProp<ViewStyle>;
     scaleTo?: number;
     haptic?: boolean;
+    /** Leave the keyboard open (every other press closes it, like tapping anywhere else). */
+    keepKeyboard?: boolean;
     children?: React.ReactNode;
 };
 
 /** Pressable that squishes on touch, with a light haptic tick. */
-export const PressableScale = ({ style, scaleTo = 0.965, haptic = true, onPress, onPressIn, onPressOut, children, ...rest }: ScaleProps) => {
+export const PressableScale = ({ style, scaleTo = 0.965, haptic = true, keepKeyboard = false, onPress, onPressIn, onPressOut, children, ...rest }: ScaleProps) => {
     const s = useSharedValue(1);
     const a = useAnimatedStyle(() => ({ transform: [{ scale: s.value }] }));
     // Layout props belong on the touchable itself, so `flex: 1` cards fill their row.
@@ -75,6 +77,7 @@ export const PressableScale = ({ style, scaleTo = 0.965, haptic = true, onPress,
                 onPressOut?.(e);
             }}
             onPress={(e) => {
+                if (!keepKeyboard) Keyboard.dismiss();
                 if (haptic) tap();
                 onPress?.(e);
             }}
@@ -153,6 +156,7 @@ export const Toggle = ({ value, onChange, label }: { value: boolean; onChange: (
             accessibilityState={{ checked: value }}
             hitSlop={8}
             onPress={() => {
+                Keyboard.dismiss();
                 tap();
                 onChange(!value);
             }}
@@ -189,6 +193,7 @@ export function Segmented<T extends string>({ options, value, onChange }: { opti
                     accessibilityState={{ selected: o.value === value }}
                     style={styles.segBtn}
                     onPress={() => {
+                        Keyboard.dismiss();
                         tap();
                         onChange(o.value);
                     }}

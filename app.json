@@ -8,14 +8,16 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": false,
+      "supportsTablet": true,
       "bundleIdentifier": "com.pierfrancesco.UniStats",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true,
         "ITSAppUsesNonExemptEncryption": false
       },
       "appleTeamId": "9JFPPZ56V8",
-      "buildNumber": "1"
+      "buildNumber": "2",
+      "appStoreUrl": "https://apps.apple.com/app/id6756898737",
+      "requireFullScreen": true
     },
     "android": {
       "adaptiveIcon": {
@@ -51,7 +53,8 @@
         }
       ],
       "./plugins/withPodDeploymentTarget",
-      "./plugins/withSceneLifecycle"
+      "./plugins/withSceneLifecycle",
+      "expo-iap"
     ],
     "scheme": "unistats"
   }

@@ -1,7 +1,7 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { BookOpen, Calculator, House, Plus, User } from 'lucide-react-native';
 import React, { useEffect } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Keyboard, Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PressableScale, SPRING, tap } from '../components/motion';
@@ -53,6 +53,7 @@ export const TabBar = ({ state, navigation }: BottomTabBarProps) => {
     const go = (i: number) => {
         const route = state.routes[i];
         const ev = navigation.emit({ type: 'tabPress', target: route.key, canPreventDefault: true });
+        Keyboard.dismiss();
         if (state.index !== i && !ev.defaultPrevented) {
             tap();
             navigation.navigate(route.name);

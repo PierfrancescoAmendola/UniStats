@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enter, PressableScale, pop } from '../../components/motion';
-import { PrimaryButton, ProgressHeader } from '../../components/ui';
+import { dismissKeyboardOnTap, PrimaryButton, ProgressHeader } from '../../components/ui';
 import { searchUniversities, UniKind, University, UNIVERSITIES } from '../../data/universities';
 import { presetsFor } from '../../data/presets';
 import { ScreenProps } from '../../navigation/types';
@@ -64,7 +64,7 @@ export const UniversityScreen = ({ navigation, route }: ScreenProps<'University'
     );
 
     return (
-        <View style={[styles.root, { paddingTop: insets.top + 12 }]}>
+        <View {...dismissKeyboardOnTap} style={[styles.root, { paddingTop: insets.top + 12 }]}>
             <View style={{ paddingHorizontal: 24, gap: 16 }}>
                 <ProgressHeader step={2} total={3} label={t('stepOf', { n: 2, total: 3 })} backLabel={t('back')} />
                 <Animated.Text entering={enter(0)} style={styles.h1}>

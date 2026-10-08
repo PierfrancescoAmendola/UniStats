@@ -24,6 +24,7 @@ export type RootParams = {
     HowCalc: undefined;
     RulesEdit: undefined;
     Legal: { doc: 'privacy' | 'terms' };
+    Support: undefined;
     Milestone: { examId: string; before: number | null };
 };
 

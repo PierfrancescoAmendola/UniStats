@@ -39,6 +39,10 @@ const en: Record<LegalDoc, LegalText> = {
                 body: 'The app asks to access a file only when you choose one to import. It does not access your contacts, location, camera or photos.',
             },
             {
+                title: 'Donations',
+                body: 'Donations are optional in-app purchases processed entirely by Apple. We never see your name, card or Apple ID: we only learn that a donation was made.',
+            },
+            {
                 title: 'Deleting your data',
                 body: 'You can erase everything at any time from Profile › Reset all data, or by uninstalling the app. Device backups (iCloud or Google) may contain a copy according to your system settings.',
             },
@@ -102,6 +106,10 @@ const it: Record<LegalDoc, LegalText> = {
             {
                 title: 'Permessi',
                 body: 'L’app accede a un file solo quando sei tu a sceglierlo per l’importazione. Non accede a contatti, posizione, fotocamera o foto.',
+            },
+            {
+                title: 'Donazioni',
+                body: 'Le donazioni sono acquisti in-app facoltativi gestiti interamente da Apple. Non vediamo mai il tuo nome, la tua carta o il tuo Apple ID: sappiamo solo che una donazione è stata fatta.',
             },
             {
                 title: 'Cancellare i dati',
@@ -169,6 +177,10 @@ const es: Record<LegalDoc, LegalText> = {
                 body: 'La app accede a un archivo solo cuando lo eliges para importarlo. No accede a contactos, ubicación, cámara ni fotos.',
             },
             {
+                title: 'Donaciones',
+                body: 'Las donaciones son compras dentro de la app opcionales gestionadas por completo por Apple. Nunca vemos tu nombre, tu tarjeta ni tu Apple ID: solo sabemos que se hizo una donación.',
+            },
+            {
                 title: 'Borrar tus datos',
                 body: 'Puedes borrarlo todo en cualquier momento desde Perfil › Borrar todos los datos, o desinstalando la app. Las copias de seguridad del dispositivo (iCloud o Google) pueden contener una copia según tus ajustes.',
             },
@@ -221,6 +233,7 @@ const fr: Record<LegalDoc, LegalText> = {
             { title: 'Import du relevé', body: 'Quand tu importes un relevé en PDF, le fichier est lu et analysé sur l’appareil. Il n’est envoyé à aucun serveur et l’app ne garde que les examens que tu confirmes.' },
             { title: 'Pas de compte, pas de suivi', body: 'UniStats n’a ni inscription, ni statistiques d’usage, ni publicité, ni SDK de suivi tiers. L’app fonctionne sans connexion internet.' },
             { title: 'Autorisations', body: 'L’app accède à un fichier uniquement quand tu le choisis pour l’importer. Elle n’accède pas à tes contacts, ta position, ton appareil photo ni tes photos.' },
+            { title: 'Dons', body: 'Les dons sont des achats intégrés facultatifs entièrement gérés par Apple. Nous ne voyons jamais ton nom, ta carte ni ton identifiant Apple : nous savons seulement qu’un don a été fait.' },
             { title: 'Supprimer tes données', body: 'Tu peux tout effacer à tout moment depuis Profil › Effacer toutes les données, ou en désinstallant l’app. Les sauvegardes de l’appareil (iCloud ou Google) peuvent en contenir une copie selon tes réglages.' },
             { title: 'Modifications', body: 'Si cette politique change, la nouvelle version sera affichée dans l’app avec sa date de mise à jour.' },
             { title: 'Contact', body: `Pour toute question sur tes données ou ces conditions, écris à ${SUPPORT_EMAIL}.` },
@@ -250,6 +263,7 @@ const de: Record<LegalDoc, LegalText> = {
             { title: 'Import der Übersicht', body: 'Wenn du eine Leistungsübersicht als PDF importierst, wird die Datei auf dem Gerät gelesen und ausgewertet. Sie wird auf keinen Server hochgeladen, und die App behält nur die Prüfungen, die du bestätigst.' },
             { title: 'Kein Konto, kein Tracking', body: 'UniStats hat keine Registrierung, keine Nutzungsstatistiken, keine Werbung und keine Tracking-SDKs von Dritten. Die App funktioniert auch ohne Internet.' },
             { title: 'Berechtigungen', body: 'Die App greift nur auf eine Datei zu, wenn du sie zum Import auswählst. Sie greift nicht auf Kontakte, Standort, Kamera oder Fotos zu.' },
+            { title: 'Spenden', body: 'Spenden sind freiwillige In-App-Käufe, die vollständig von Apple abgewickelt werden. Wir sehen nie deinen Namen, deine Karte oder deine Apple-ID: Wir erfahren nur, dass gespendet wurde.' },
             { title: 'Daten löschen', body: 'Du kannst jederzeit alles unter Profil › Alle Daten löschen entfernen oder die App deinstallieren. Geräte-Backups (iCloud oder Google) können je nach Einstellung eine Kopie enthalten.' },
             { title: 'Änderungen', body: 'Ändert sich diese Erklärung, zeigt die App die neue Version mit ihrem Datum an.' },
             { title: 'Kontakt', body: `Bei Fragen zu deinen Daten oder diesen Bedingungen schreib an ${SUPPORT_EMAIL}.` },
@@ -279,6 +293,7 @@ const pt: Record<LegalDoc, LegalText> = {
             { title: 'Importação do histórico', body: 'Quando você importa um histórico em PDF, o arquivo é lido e analisado no aparelho. Ele não é enviado a nenhum servidor e o app guarda só os exames que você confirma.' },
             { title: 'Sem conta, sem rastreamento', body: 'O UniStats não tem cadastro, estatísticas de uso, publicidade nem SDKs de rastreamento de terceiros. O app funciona sem internet.' },
             { title: 'Permissões', body: 'O app acessa um arquivo só quando você o escolhe para importar. Não acessa contatos, localização, câmera nem fotos.' },
+            { title: 'Doações', body: 'As doações são compras dentro do app opcionais, processadas inteiramente pela Apple. Nunca vemos seu nome, cartão ou Apple ID: só sabemos que uma doação foi feita.' },
             { title: 'Apagar seus dados', body: 'Você pode apagar tudo a qualquer momento em Perfil › Apagar todos os dados, ou desinstalando o app. Os backups do aparelho (iCloud ou Google) podem conter uma cópia conforme suas configurações.' },
             { title: 'Alterações', body: 'Se esta política mudar, a nova versão será mostrada no app com a data de atualização.' },
             { title: 'Contato', body: `Para qualquer dúvida sobre seus dados ou estes termos, escreva para ${SUPPORT_EMAIL}.` },
