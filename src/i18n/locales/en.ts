@@ -16,7 +16,7 @@ const en = {
 
     // Onboarding · intro
     onb1Title: 'Your whole degree at a glance.',
-    onb1Body: 'Average, credits and final grade, calculated with your university’s rules. No spreadsheets.',
+    onb1Body: 'Average, credits and final grade, calculated with your course’s rules. No spreadsheets.',
     onb1Cta: 'Let’s start',
     onb1Chip: '+{v} last exam',
     average: 'Average',
@@ -31,7 +31,7 @@ const en = {
     onTimeShort: 'On time',
     predictedGrade: 'Predicted grade',
     onb3Title: 'Find out your final grade.',
-    onb3Body: 'Thesis points, bonuses and rounding change from one university to another. We use yours.',
+    onb3Body: 'Thesis points, bonuses and rounding change from one course to another. Set them as your regulation says.',
     onb3Cta: 'Set up my degree',
 
     // Onboarding · level
@@ -192,7 +192,7 @@ const en = {
     toolsTitle: 'Tools',
     toolsBody: 'One question, one answer. Pick what you want to know.',
     qGrad: 'What will I graduate with?',
-    qGradSub: 'Base + thesis + your university’s bonuses',
+    qGradSub: 'Base + thesis + your course’s bonuses',
     qNeed: 'What grade do I need?',
     qNeedSub: 'To reach the average you want',
     qWhatIf: 'What if I get…?',
@@ -266,7 +266,7 @@ const en = {
     untilEnd: 'Until the end',
     inPractice: 'In practice:',
     tipText: 'about {n} exams of 9 CFU averaging {v}.',
-    lodeNote: 'Honours count as {v} at your university.',
+    lodeNote: 'With your rules, honours count as {v}.',
     noGradesYet: 'Add a graded exam first: then we can calculate it.',
 
     // What if
@@ -289,7 +289,7 @@ const en = {
     step1: 'Multiply each grade by its credits',
     moreExams: '+ {n} more exams',
     total: 'Total',
-    step1Note: 'Honours count {v} at your university. Pass/fail exams give credits but stay out.',
+    step1Note: 'With your rules, honours count {v}. Pass/fail exams give credits but stay out.',
     step1NoteDrop: 'Your rules leave out the lowest grades ({v}).',
     step2: 'Divide by graded credits',
     step2Sub: '{sum} ÷ {cfu} = weighted average',

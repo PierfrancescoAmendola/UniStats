@@ -18,7 +18,7 @@ const de: Dict = {
 
     // Onboarding · intro
     onb1Title: 'Dein ganzes Studium auf einen Blick.',
-    onb1Body: 'Schnitt, Credits und Abschlussnote, berechnet nach den Regeln deiner Uni. Ohne Tabellen.',
+    onb1Body: 'Schnitt, Credits und Abschlussnote, berechnet nach den Regeln deines Studiengangs. Ohne Tabellen.',
     onb1Cta: 'Los geht’s',
     onb1Chip: '+{v} letzte Prüfung',
     average: 'Schnitt',
@@ -33,7 +33,7 @@ const de: Dict = {
     onTimeShort: 'In Regelzeit',
     predictedGrade: 'Erwartete Note',
     onb3Title: 'Finde deine Abschlussnote heraus.',
-    onb3Body: 'Punkte für die Arbeit, Boni und Rundung sind an jeder Uni anders. Wir nutzen deine.',
+    onb3Body: 'Punkte für die Arbeit, Boni und Rundung sind in jedem Studiengang anders. Du stellst sie nach deiner Ordnung ein.',
     onb3Cta: 'Mein Studium einrichten',
 
     // Onboarding · level
@@ -194,7 +194,7 @@ const de: Dict = {
     toolsTitle: 'Tools',
     toolsBody: 'Eine Frage, eine Antwort. Wähle, was du wissen willst.',
     qGrad: 'Mit welcher Note schließe ich ab?',
-    qGradSub: 'Basis + Arbeit + Boni deiner Uni',
+    qGradSub: 'Basis + Arbeit + Boni deines Studiengangs',
     qNeed: 'Welche Note brauche ich?',
     qNeedSub: 'Um den gewünschten Schnitt zu erreichen',
     qWhatIf: 'Was wäre, wenn…?',
@@ -268,7 +268,7 @@ const de: Dict = {
     untilEnd: 'Bis zum Ende',
     inPractice: 'Konkret:',
     tipText: 'etwa {n} Prüfungen zu 9 CFU mit {v} im Schnitt.',
-    lodeNote: 'An deiner Uni zählt die Auszeichnung {v}.',
+    lodeNote: 'Nach deinen Regeln zählt die Auszeichnung {v}.',
     noGradesYet: 'Füge zuerst eine benotete Prüfung hinzu: dann können wir rechnen.',
 
     // What if
@@ -291,7 +291,7 @@ const de: Dict = {
     step1: 'Jede Note mal ihre Credits',
     moreExams: '+ {n} weitere Prüfungen',
     total: 'Summe',
-    step1Note: 'An deiner Uni zählt die Auszeichnung {v}. Unbenotete Prüfungen bringen Credits, bleiben aber außen vor.',
+    step1Note: 'Nach deinen Regeln zählt die Auszeichnung {v}. Unbenotete Prüfungen bringen Credits, bleiben aber außen vor.',
     step1NoteDrop: 'Deine Regeln lassen die schlechtesten Noten weg ({v}).',
     step2: 'Durch die benoteten Credits teilen',
     step2Sub: '{sum} ÷ {cfu} = gewichteter Schnitt',

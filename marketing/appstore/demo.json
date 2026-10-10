@@ -3,12 +3,12 @@
         "level": "L",
         "years": 3,
         "totalCfu": 180,
-        "universityId": "sapienza",
+        "universityId": "bocconi",
         "cohort": 2025,
-        "ruleId": "sapienza-econ-L",
+        "ruleId": "bocconi-L",
         "customRule": null,
-        "thesisPoints": 2,
-        "bonusInput": { "onTime": true },
+        "thesisPoints": 4,
+        "bonusInput": { "experience": true },
         "targetAverage": 28.5
     },
     "people": {

@@ -18,7 +18,7 @@ const pt: Dict = {
 
     // Onboarding · intro
     onb1Title: 'Todo o seu curso num relance.',
-    onb1Body: 'Média, créditos e nota final, calculados com as regras da sua universidade. Sem planilhas.',
+    onb1Body: 'Média, créditos e nota final, calculados com as regras do seu curso. Sem planilhas.',
     onb1Cta: 'Vamos começar',
     onb1Chip: '+{v} último exame',
     average: 'Média',
@@ -33,7 +33,7 @@ const pt: Dict = {
     onTimeShort: 'No prazo',
     predictedGrade: 'Nota prevista',
     onb3Title: 'Descubra sua nota de formatura.',
-    onb3Body: 'Pontos do TCC, bônus e arredondamento mudam de uma universidade para outra. Usamos os seus.',
+    onb3Body: 'Pontos do TCC, bônus e arredondamento mudam de um curso para outro. Você os ajusta conforme o seu regulamento.',
     onb3Cta: 'Configurar meu curso',
 
     // Onboarding · level
@@ -194,7 +194,7 @@ const pt: Dict = {
     toolsTitle: 'Ferramentas',
     toolsBody: 'Uma pergunta, uma resposta. Escolha o que quer saber.',
     qGrad: 'Com quanto vou me formar?',
-    qGradSub: 'Base + TCC + bônus da sua universidade',
+    qGradSub: 'Base + TCC + bônus do seu curso',
     qNeed: 'Que nota eu preciso?',
     qNeedSub: 'Para chegar à média que você quer',
     qWhatIf: 'E se eu tirar…?',
@@ -268,7 +268,7 @@ const pt: Dict = {
     untilEnd: 'Até o fim',
     inPractice: 'Na prática:',
     tipText: 'cerca de {n} exames de 9 CFU com média {v}.',
-    lodeNote: 'Na sua universidade o louvor vale {v}.',
+    lodeNote: 'Com as suas regras o louvor vale {v}.',
     noGradesYet: 'Adicione primeiro um exame com nota: aí podemos calcular.',
 
     // What if
@@ -291,7 +291,7 @@ const pt: Dict = {
     step1: 'Multiplique cada nota pelos créditos',
     moreExams: '+ {n} outros exames',
     total: 'Total',
-    step1Note: 'Na sua universidade o louvor vale {v}. Exames sem nota dão créditos mas ficam de fora.',
+    step1Note: 'Com as suas regras o louvor vale {v}. Exames sem nota dão créditos mas ficam de fora.',
     step1NoteDrop: 'Suas regras deixam de fora as notas mais baixas ({v}).',
     step2: 'Divida pelos créditos com nota',
     step2Sub: '{sum} ÷ {cfu} = média ponderada',

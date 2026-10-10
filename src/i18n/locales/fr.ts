@@ -18,7 +18,7 @@ const fr: Dict = {
 
     // Onboarding · intro
     onb1Title: 'Tout ton cursus en un coup d’œil.',
-    onb1Body: 'Moyenne, crédits et note finale, calculés avec les règles de ton université. Sans tableur.',
+    onb1Body: 'Moyenne, crédits et note finale, calculés avec les règles de ta filière. Sans tableur.',
     onb1Cta: 'C’est parti',
     onb1Chip: '+{v} dernier examen',
     average: 'Moyenne',
@@ -33,7 +33,7 @@ const fr: Dict = {
     onTimeShort: 'Dans les temps',
     predictedGrade: 'Note prévue',
     onb3Title: 'Découvre ta note de fin d’études.',
-    onb3Body: 'Points de mémoire, bonus et arrondis changent d’une université à l’autre. On utilise les tiens.',
+    onb3Body: 'Points de mémoire, bonus et arrondis changent d’une filière à l’autre. Tu les règles selon ton règlement.',
     onb3Cta: 'Configurer mon cursus',
 
     // Onboarding · level
@@ -194,7 +194,7 @@ const fr: Dict = {
     toolsTitle: 'Outils',
     toolsBody: 'Une question, une réponse. Choisis ce que tu veux savoir.',
     qGrad: 'Avec quelle note vais-je finir ?',
-    qGradSub: 'Base + mémoire + bonus de ton université',
+    qGradSub: 'Base + mémoire + bonus de ta filière',
     qNeed: 'Quelle note me faut-il ?',
     qNeedSub: 'Pour atteindre la moyenne que tu veux',
     qWhatIf: 'Et si j’obtiens… ?',
@@ -268,7 +268,7 @@ const fr: Dict = {
     untilEnd: 'Jusqu’à la fin',
     inPractice: 'En pratique :',
     tipText: 'environ {n} examens de 9 CFU avec {v} de moyenne.',
-    lodeNote: 'Dans ton université, la mention vaut {v}.',
+    lodeNote: 'Avec tes règles, la mention vaut {v}.',
     noGradesYet: 'Ajoute d’abord un examen noté : on pourra alors le calculer.',
 
     // What if
@@ -291,7 +291,7 @@ const fr: Dict = {
     step1: 'Multiplie chaque note par ses crédits',
     moreExams: '+ {n} autres examens',
     total: 'Total',
-    step1Note: 'Dans ton université la mention vaut {v}. Les examens validés donnent des crédits mais restent hors calcul.',
+    step1Note: 'Avec tes règles, la mention vaut {v}. Les examens validés donnent des crédits mais restent hors calcul.',
     step1NoteDrop: 'Tes règles écartent les notes les plus basses ({v}).',
     step2: 'Divise par les crédits notés',
     step2Sub: '{sum} ÷ {cfu} = moyenne pondérée',
