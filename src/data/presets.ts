@@ -272,6 +272,19 @@ export const PRESETS: Rule[] = [
         ],
         provenance: { sources: [src('Voto di laurea Giurisprudenza', 'https://www.giurisprudenza.unifi.it')] },
     }),
+    // Federico II, computer science bachelor (N86, DIETI): career average in /110, plus 1–6 from the
+    // commission, 5 points for graduating within 3 academic years (2 within 4), and an average incentive
+    // X*3/22 − 11 when X >= 81 (0 to 4 points). Honours need an average >= 28/30 and 110.
+    make({
+        id: 'unina-inf-L', universityId: 'unina', scopeLabel: 'Informatica (N86)', levels: ['L'],
+        finalExam: { min: 1, max: 6 },
+        bonuses: [
+            { id: 'speed', kind: 'onTime', tiers: [{ label: 'onTime', points: 5 }, { label: 'oneYearLate', points: 2 }] },
+            { id: 'avg', kind: 'averageLinear', from: 242 / 3, to: 110, maxPoints: 4, minBase: 81 },
+        ],
+        lode: { minBase: 28 * F },
+        provenance: { sources: [src('Guida dello studente 2025/26, esame finale', 'https://informatica.dieti.unina.it/images/guide-studenti/GuidaTriennaleInformatica-25-26_v11.pdf')] },
+    }),
     // Federico II, law: half-down rounding (from .51).
     make({
         id: 'unina-giur-LMCU', universityId: 'unina', scopeLabel: 'Giurisprudenza', levels: ['LMCU'],

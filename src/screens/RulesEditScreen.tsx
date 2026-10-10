@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, Linking, Platform, ScrollView, StyleSheet, Text, 
 import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enter, PressableScale, Toggle, LAYOUT } from '../components/motion';
-import { BackButton, dismissKeyboardOnTap } from '../components/ui';
+import { BackButton } from '../components/ui';
 import { computeAverage } from '../engine/average';
 import { Rule, RoundingMode } from '../engine/types';
 import { formatNumber } from '../i18n';
@@ -70,7 +70,7 @@ export const RulesEditScreen = (_: ScreenProps<'RulesEdit'>) => {
     );
 
     return (
-        <KeyboardAvoidingView {...dismissKeyboardOnTap} style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <KeyboardAvoidingView style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" contentContainerStyle={{ paddingTop: insets.top + 12, paddingHorizontal: 20, paddingBottom: insets.bottom + 24, gap: 12 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
                     <BackButton label={t('back')} />
@@ -185,7 +185,7 @@ export const RulesEditScreen = (_: ScreenProps<'RulesEdit'>) => {
                             ref={bonusInput}
                             onChangeText={(v) => (bonusNameRef.current = v)}
                             placeholder={t('bonusName')}
-                            placeholderTextColor="#9A9AAE"
+                            placeholderTextColor={C.placeholder}
                             accessibilityLabel={t('bonusName')}
                             style={{ flex: 1, fontFamily: F.semi, fontSize: 15, color: C.text, padding: 0 }}
                         />

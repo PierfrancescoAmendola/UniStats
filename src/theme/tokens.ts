@@ -48,6 +48,8 @@ const LIGHT = {
     sel: '#14141F',
     segTrack: '#E4E2EE',
     segInd: '#FFFFFF',
+    /** Placeholder text in fields: readable, but clearly lighter than typed text. */
+    placeholder: '#76768A',
 };
 
 export type Palette = typeof LIGHT;
@@ -78,6 +80,7 @@ const DARK: Palette = {
     sel: '#5A3FFF',
     segTrack: '#13131C',
     segInd: '#2C2C40',
+    placeholder: '#8A89A3',
 };
 
 export type Scheme = 'light' | 'dark';

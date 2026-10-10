@@ -1,7 +1,7 @@
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Minus, Plus } from 'lucide-react-native';
 import React, { useMemo, useRef, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AnimatedNumber, PressableScale, Segmented } from '../components/motion';
@@ -65,16 +65,23 @@ export const AddExamScreen = ({ navigation, route }: ScreenProps<'AddExam'>) => 
     };
 
     return (
-        <KeyboardAvoidingView {...dismissKeyboardOnTap} style={{ flex: 1, backgroundColor: C.fog, paddingTop: insets.top }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        // No KeyboardAvoidingView: the average preview and the save button stay at the bottom, under the
+        // keyboard, instead of jumping up while the name is typed. The list scrolls above the keyboard.
+        <View style={{ flex: 1, backgroundColor: C.fog, paddingTop: insets.top }}>
             <View style={styles.grabber} />
-            <View style={styles.top}>
+            <View {...dismissKeyboardOnTap} style={styles.top}>
                 <PressableScale onPress={() => navigation.goBack()} style={{ paddingVertical: 8, minWidth: 70 }}>
                     <Text style={styles.cancel}>{t('cancel')}</Text>
                 </PressableScale>
                 <Text style={styles.title}>{existing ? t('editExam') : t('newExam')}</Text>
                 <View style={{ minWidth: 70 }} />
             </View>
-            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20, gap: 12 }}>
+            <ScrollView
+                keyboardShouldPersistTaps="handled"
+                keyboardDismissMode="interactive"
+                automaticallyAdjustKeyboardInsets
+                contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20, gap: 12 }}
+            >
                 <View style={styles.field}>
                     <Text style={styles.lbl}>{t('examName')}</Text>
                     <TextInput
@@ -84,7 +91,7 @@ export const AddExamScreen = ({ navigation, route }: ScreenProps<'AddExam'>) => 
                             if (!!v.trim() !== hasName) setHasName(!!v.trim());
                         }}
                         placeholder={t('examNamePlaceholder')}
-                        placeholderTextColor="#9A9AAE"
+                        placeholderTextColor={C.placeholder}
                         accessibilityLabel={t('examName')}
                         style={styles.input}
                         autoFocus={!existing}
@@ -128,7 +135,7 @@ export const AddExamScreen = ({ navigation, route }: ScreenProps<'AddExam'>) => 
                     </Animated.View>
                 ) : (
                     <Animated.View entering={FadeIn.duration(200)} exiting={FadeOut.duration(120)} style={[styles.card, { backgroundColor: C.sunSoft }]}>
-                        <Text style={{ fontFamily: F.medium, fontSize: 14, lineHeight: 20, color: C.amberDeep }}>{t('passFailNote')}</Text>
+                        <Text style={{ fontFamily: F.medium, fontSize: 14, lineHeight: 20, color: C.amberText }}>{t('passFailNote')}</Text>
                     </Animated.View>
                 )}
 
@@ -185,7 +192,7 @@ export const AddExamScreen = ({ navigation, route }: ScreenProps<'AddExam'>) => 
                 )}
             </ScrollView>
 
-            <View style={{ paddingHorizontal: 20, paddingBottom: insets.bottom + 12, gap: 10 }}>
+            <View {...dismissKeyboardOnTap} style={{ paddingHorizontal: 20, paddingBottom: insets.bottom + 12, gap: 10 }}>
                 <View style={styles.preview}>
                     <View>
                         <Text style={{ fontFamily: F.body, fontSize: 13, color: C.text4 }}>{preview.before === null ? t('firstAverage') : t('averageBecomes')}</Text>
@@ -206,7 +213,7 @@ export const AddExamScreen = ({ navigation, route }: ScreenProps<'AddExam'>) => 
                 </View>
                 <PrimaryButton label={t('saveExam')} disabled={!hasName} onPress={save} />
             </View>
-        </KeyboardAvoidingView>
+        </View>
     );
 };
 
@@ -217,7 +224,7 @@ const styles = themed(() => StyleSheet.create({
     title: { fontFamily: F.display, fontSize: 20, color: C.text },
     field: { backgroundColor: C.surface, borderRadius: 18, paddingHorizontal: 14, paddingVertical: 12, gap: 6 },
     lbl: { fontFamily: F.semi, fontSize: 13, color: C.text3 },
-    input: { fontFamily: F.semi, fontSize: 17, color: C.text, padding: 0 },
+    input: { fontFamily: F.semi, fontSize: 17, color: C.text, padding: 0, minHeight: 26 },
     value: { fontFamily: F.semi, fontSize: 16, color: C.text },
     card: { backgroundColor: C.surface, borderRadius: 22, padding: 14, gap: 10 },
     grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },

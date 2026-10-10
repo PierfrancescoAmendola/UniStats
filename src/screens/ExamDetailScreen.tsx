@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react-native';
-import React, { useMemo, useRef } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { Alert, Keyboard, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Bar, enter, PressableScale, pop } from '../components/motion';
@@ -28,6 +28,15 @@ export const ExamDetailScreen = ({ navigation, route }: ScreenProps<'ExamDetail'
     const insets = useSafeAreaInsets();
     const exam = state.exams.find((e) => e.id === route.params.examId);
     const noteRef = useRef(exam?.note ?? '');
+    const scroll = useRef<ScrollView>(null);
+    const editingNote = useRef(false);
+    // The notes field sits at the bottom: once the keyboard is up, scroll so the text being typed stays visible.
+    useEffect(() => {
+        const sub = Keyboard.addListener('keyboardDidShow', () => {
+            if (editingNote.current) scroll.current?.scrollToEnd({ animated: true });
+        });
+        return () => sub.remove();
+    }, []);
 
     const data = useMemo(() => {
         if (!exam) return null;
@@ -83,7 +92,14 @@ export const ExamDetailScreen = ({ navigation, route }: ScreenProps<'ExamDetail'
     );
 
     return (
-        <ScrollView style={{ backgroundColor: C.fog }} contentContainerStyle={{ paddingBottom: insets.bottom + 24 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive">
+        <ScrollView
+            ref={scroll}
+            style={{ backgroundColor: C.fog }}
+            contentContainerStyle={{ paddingBottom: insets.bottom + 24 }}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="interactive"
+            automaticallyAdjustKeyboardInsets
+        >
             <View style={[styles.head, { backgroundColor: head.bg, paddingTop: insets.top + 12 }]}>
                 <View style={[styles.blob, { backgroundColor: head.blob }]} />
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -145,9 +161,15 @@ export const ExamDetailScreen = ({ navigation, route }: ScreenProps<'ExamDetail'
                     <TextInput
                         defaultValue={noteRef.current}
                         onChangeText={(v) => (noteRef.current = v)}
-                        onEndEditing={() => upsertExam({ ...exam, note: noteRef.current.trim() || undefined })}
+                        onFocus={() => (editingNote.current = true)}
+                        onEndEditing={() => {
+                            editingNote.current = false;
+                            upsertExam({ ...exam, note: noteRef.current.trim() || undefined });
+                        }}
+                        // A new line makes the field taller: keep its last line above the keyboard.
+                        onContentSizeChange={() => editingNote.current && scroll.current?.scrollToEnd({ animated: false })}
                         placeholder={t('notesPlaceholder')}
-                        placeholderTextColor="#9A9AAE"
+                        placeholderTextColor={C.placeholder}
                         accessibilityLabel={t('notes')}
                         multiline
                         style={{ fontFamily: F.body, fontSize: 15, lineHeight: 21, color: C.text, minHeight: 44, padding: 0 }}

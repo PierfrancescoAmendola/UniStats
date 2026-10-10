@@ -42,6 +42,7 @@ const bonusPoints = (b: Bonus, avg: AverageResult, base: number, input: BonusInp
         case 'averageBand':
             return { points: firstBand(b.bands, b.on === 'avg30' ? avg30 : base)?.points ?? 0, auto: true };
         case 'averageLinear':
+            if (b.minBase != null && snap(base) < b.minBase) return { points: 0, auto: true };
             return { points: clamp((base - b.from) / (b.to - b.from), 0, 1) * b.maxPoints, auto: true };
         case 'onTime': {
             const i = input[b.id];

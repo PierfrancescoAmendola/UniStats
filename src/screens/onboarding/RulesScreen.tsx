@@ -49,7 +49,7 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
     );
 
     return (
-        <KeyboardAvoidingView {...dismissKeyboardOnTap} style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <KeyboardAvoidingView style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <ScrollView
                 keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive"
                 contentContainerStyle={{ paddingTop: insets.top + 12, paddingHorizontal: 24, paddingBottom: 24, gap: 14 }}
@@ -67,7 +67,7 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
                             onChangeText={(v) => (name.current = v)}
                             onEndEditing={commitText}
                             placeholder={t('namePlaceholder')}
-                            placeholderTextColor="#9A9AAE"
+                            placeholderTextColor={C.placeholder}
                             accessibilityLabel={t('yourName')}
                             style={styles.fieldInput}
                             autoCapitalize="words"
@@ -94,7 +94,7 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
                         onChangeText={(v) => (course.current = v)}
                         onEndEditing={commitText}
                         placeholder={t('coursePlaceholder')}
-                        placeholderTextColor="#9A9AAE"
+                        placeholderTextColor={C.placeholder}
                         accessibilityLabel={t('courseName')}
                         style={styles.fieldInput}
                     />
@@ -141,7 +141,7 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
                     <Text style={styles.customizeTxt}>{t('customizeRules')}</Text>
                 </PressableScale>
             </ScrollView>
-            <View style={{ paddingHorizontal: 24, paddingBottom: insets.bottom + 16, paddingTop: 8 }}>
+            <View {...dismissKeyboardOnTap} style={{ paddingHorizontal: 24, paddingBottom: insets.bottom + 16, paddingTop: 8 }}>
                 <PrimaryButton label={t('looksRight')} onPress={confirm} />
             </View>
         </KeyboardAvoidingView>
@@ -152,7 +152,7 @@ const styles = themed(() => StyleSheet.create({
     h1: { fontFamily: F.display, fontSize: 34, lineHeight: 36, color: C.text },
     field: { backgroundColor: C.surface, borderRadius: 18, paddingHorizontal: 14, paddingVertical: 12, gap: 6 },
     fieldLbl: { fontFamily: F.semi, fontSize: 13, color: C.text3 },
-    fieldInput: { fontFamily: F.semi, fontSize: 16, color: C.text, padding: 0 },
+    fieldInput: { fontFamily: F.semi, fontSize: 16, color: C.text, padding: 0, minHeight: 24 },
     fieldNum: { fontFamily: F.display, fontSize: 18, color: C.text },
     mini: { width: 28, height: 28, borderRadius: 9, backgroundColor: C.fog, alignItems: 'center', justifyContent: 'center' },
     kicker: { fontFamily: F.bold, fontSize: 13, letterSpacing: 1, textTransform: 'uppercase', color: C.text3 },

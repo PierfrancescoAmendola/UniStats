@@ -8,9 +8,11 @@ import { PressableScale } from './motion';
 type TProps = TextProps & { style?: StyleProp<TextStyle> };
 
 /**
- * Spread on a screen's root view: a tap that no child handles (empty space, headers, cards)
- * closes the keyboard. Buttons close it themselves (PressableScale), scroll views use
- * keyboardShouldPersistTaps="handled" and keyboardDismissMode, so a tap anywhere closes it.
+ * Spread on a fixed (non-scrolling) part of a screen, such as a header or a footer: a tap that no
+ * child handles closes the keyboard. Never put it on a view that contains a ScrollView: it takes
+ * the touches that start on empty space, and the list then scrolls only from its cards.
+ * Scroll views close the keyboard themselves (keyboardShouldPersistTaps="handled" and
+ * keyboardDismissMode), and buttons close it too (PressableScale).
  */
 export const dismissKeyboardOnTap = {
     onStartShouldSetResponder: () => true,

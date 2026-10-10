@@ -7,7 +7,7 @@ import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, StyleShe
 import Animated, { FadeIn, FadeInDown, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enter, PressableScale, rise, pop } from '../components/motion';
-import { BackButton, dismissKeyboardOnTap, GradeBadge, PrimaryButton } from '../components/ui';
+import { BackButton, GradeBadge, PrimaryButton } from '../components/ui';
 import { Exam } from '../engine/types';
 import { formatDate } from '../i18n';
 import { ScreenProps } from '../navigation/types';
@@ -81,7 +81,7 @@ export const ImportPdfScreen = ({ navigation }: ScreenProps<'ImportPdf'>) => {
     };
 
     return (
-        <KeyboardAvoidingView {...dismissKeyboardOnTap} style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <KeyboardAvoidingView style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" contentContainerStyle={{ paddingTop: insets.top + 12, paddingHorizontal: 20, paddingBottom: 20, gap: 12 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
                     <BackButton label={t('back')} />
@@ -111,7 +111,7 @@ export const ImportPdfScreen = ({ navigation }: ScreenProps<'ImportPdf'>) => {
                                     if (!!v.trim() !== hasPaste) setHasPaste(!!v.trim());
                                 }}
                                 placeholder={t('pastePlaceholder')}
-                                placeholderTextColor="#9A9AAE"
+                                placeholderTextColor={C.placeholder}
                                 accessibilityLabel={t('pasteInstead')}
                                 multiline
                                 style={styles.paste}

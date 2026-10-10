@@ -1,6 +1,6 @@
 import { BricolageGrotesque_600SemiBold, BricolageGrotesque_800ExtraBold } from '@expo-google-fonts/bricolage-grotesque';
 import { Figtree_400Regular, Figtree_500Medium, Figtree_600SemiBold, Figtree_700Bold, useFonts } from '@expo-google-fonts/figtree';
-import { createNavigationContainerRef, DarkTheme, DefaultTheme, LinkingOptions, NavigationContainer, NavigationState } from '@react-navigation/native';
+import { createNavigationContainerRef, DarkTheme, DefaultTheme, InitialState, LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
@@ -46,6 +46,8 @@ const linking: LinkingOptions<RootParams> = {
     },
 };
 
+const HOME_STATE: InitialState = { routes: [{ name: 'Tabs', state: { routes: [{ name: 'Home' }] } }] };
+
 const navTheme = (s: Scheme) => {
     const base = s === 'dark' ? DarkTheme : DefaultTheme;
     return { ...base, colors: { ...base.colors, background: C.fog, primary: C.violet, card: C.fog, text: C.text } };
@@ -77,9 +79,10 @@ const Root = () => {
         SystemUI.setBackgroundColorAsync(PALETTES[scheme].fog).catch(() => undefined);
     }, [scheme]);
 
-    // Switching theme remounts the navigation tree (static styles re-read the palette);
-    // the navigation state is kept so the user stays on the same screen.
-    const navState = useRef<NavigationState | undefined>(undefined);
+    // Switching theme remounts the navigation tree (static styles re-read the palette).
+    // The remounted tree opens on Home: restoring the old state put the user on the wrong tab.
+    const navState = useRef<InitialState | undefined>(undefined);
+    const mountedScheme = useRef(scheme);
     // Name of the screen on top, so pop-ups only appear over Home.
     const [route, setRoute] = useState<string | undefined>(undefined);
     const [fade, setFade] = useState<{ color: string; id: number } | null>(null);
@@ -99,6 +102,12 @@ const Root = () => {
     useEffect(() => {
         if (ready) SplashScreen.hideAsync().catch(() => undefined);
     }, [ready]);
+    // Only a switch while the app is on screen: the stored theme applied at launch must not
+    // override the start screen or a deep link.
+    if (mountedScheme.current !== scheme) {
+        if (navRef.isReady() && state.onboarded) navState.current = HOME_STATE;
+        mountedScheme.current = scheme;
+    }
     if (!ready) return null;
     return (
         <>

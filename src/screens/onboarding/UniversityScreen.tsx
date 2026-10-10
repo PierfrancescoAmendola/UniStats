@@ -64,8 +64,8 @@ export const UniversityScreen = ({ navigation, route }: ScreenProps<'University'
     );
 
     return (
-        <View {...dismissKeyboardOnTap} style={[styles.root, { paddingTop: insets.top + 12 }]}>
-            <View style={{ paddingHorizontal: 24, gap: 16 }}>
+        <View style={[styles.root, { paddingTop: insets.top + 12 }]}>
+            <View {...dismissKeyboardOnTap} style={{ paddingHorizontal: 24, gap: 16 }}>
                 <ProgressHeader step={2} total={3} label={t('stepOf', { n: 2, total: 3 })} backLabel={t('back')} />
                 <Animated.Text entering={enter(0)} style={styles.h1}>
                     {t('uniTitle')}
@@ -76,7 +76,7 @@ export const UniversityScreen = ({ navigation, route }: ScreenProps<'University'
                         defaultValue=""
                         onChangeText={setQ}
                         placeholder={t('uniSearch')}
-                        placeholderTextColor="#76768A"
+                        placeholderTextColor={C.placeholder}
                         accessibilityLabel={t('uniSearch')}
                         style={styles.input}
                         autoCorrect={false}

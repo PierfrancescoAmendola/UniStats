@@ -81,6 +81,35 @@ describe('graduation', () => {
         expect(computeGraduation(a, NATIONAL_DEFAULTS.L, 99).thesis).toBe(5);
     });
 
+    it('adds speed and average incentives (Federico II, Informatica)', () => {
+        const r = rule('unina-inf-L');
+        // Weighted 25.3 over 30 CFU: base 92.77, incentive 92.77 * 3/22 - 11 = 1.65.
+        const a = computeAverage([ex(25, 21), ex(26, 9)], r);
+        expect(a.avg30).toBeCloseTo(25.3, 6);
+        const g = computeGraduation(a, r, 6, { speed: 0 });
+        expect(g.bonusTotal).toBeCloseTo(5 + (25.3 * 110) / 30 * (3 / 22) - 11, 6);
+        expect(g.raw).toBeCloseTo(105.42, 2);
+        expect(g.final).toBe(105);
+        // One year late: 2 points instead of 5.
+        expect(computeGraduation(a, r, 6, { speed: 1 }).final).toBe(102);
+    });
+
+    it('gives no average incentive under 81/110 (Federico II, Informatica)', () => {
+        const r = rule('unina-inf-L');
+        const a = computeAverage([ex(22, 6)], r);
+        expect(computeGraduation(a, r, 1).bonuses.find((b) => b.id === 'avg')?.points).toBe(0);
+    });
+
+    it('allows honours only with an average of 28 (Federico II, Informatica)', () => {
+        const r = rule('unina-inf-L');
+        const hi = computeAverage([ex(28, 6)], r);
+        expect(computeGraduation(hi, r, 6, { speed: 0 }).lodePossible).toBe(true);
+        const lo = computeAverage([ex(27, 6)], r);
+        const g = computeGraduation(lo, r, 6, { speed: 0 });
+        expect(g.final).toBe(110);
+        expect(g.lodePossible).toBe(false);
+    });
+
     it('uses factor 3.86 (Trento)', () => {
         const a = computeAverage([ex(27, 6), ex(27, 6)], rule('unitn-dem-L'));
         expect(computeGraduation(a, rule('unitn-dem-L'), 0).base).toBeCloseTo(27 * 3.86, 6);

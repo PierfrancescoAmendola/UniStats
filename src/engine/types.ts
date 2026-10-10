@@ -29,7 +29,8 @@ export type Bonus =
     | { id: string; kind: 'lodeCfu'; pointsPerCfu: number; max?: number }
     | { id: string; kind: 'lodeTiers'; tiers: { gte: number; points: number }[] }
     | { id: string; kind: 'averageBand'; on: 'avg30' | 'base110'; bands: { gte: number; points: number }[] }
-    | { id: string; kind: 'averageLinear'; from: number; to: number; maxPoints: number }
+    /** Linear on the base: 0 at `from`, `maxPoints` at `to`. Below `minBase` (when set) it is 0. */
+    | { id: string; kind: 'averageLinear'; from: number; to: number; maxPoints: number; minBase?: number }
     | { id: string; kind: 'onTime'; tiers: Tier[]; minAvg30?: number }
     | { id: string; kind: 'onTimePercent'; tiers: { label: string; pct: number }[] }
     | { id: string; kind: 'mobility'; tiers: { cfuGte: number; points: number }[]; group?: string }
