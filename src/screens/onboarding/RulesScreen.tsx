@@ -1,7 +1,7 @@
 import { CommonActions } from '@react-navigation/native';
 import { Minus, Pencil, Plus } from 'lucide-react-native';
 import React, { useRef } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enter, PressableScale, LAYOUT } from '../../components/motion';
@@ -49,9 +49,11 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
     );
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        // No KeyboardAvoidingView: "Looks right" stays at the bottom, under the keyboard, instead of
+        // jumping up while the name or the course is typed. The list scrolls above the keyboard.
+        <View style={{ flex: 1, backgroundColor: C.fog }}>
             <ScrollView
-                keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive"
+                keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" automaticallyAdjustKeyboardInsets
                 contentContainerStyle={{ paddingTop: insets.top + 12, paddingHorizontal: 24, paddingBottom: 24, gap: 14 }}
             >
                 <ProgressHeader step={3} total={3} label={t('stepOf', { n: 3, total: 3 })} backLabel={t('back')} />
@@ -145,7 +147,7 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
             <View {...dismissKeyboardOnTap} style={{ paddingHorizontal: 24, paddingBottom: insets.bottom + 16, paddingTop: 8 }}>
                 <PrimaryButton label={t('looksRight')} onPress={confirm} />
             </View>
-        </KeyboardAvoidingView>
+        </View>
     );
 };
 

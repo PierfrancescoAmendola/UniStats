@@ -3,7 +3,7 @@ import { File } from 'expo-file-system';
 import * as Haptics from 'expo-haptics';
 import { AlertCircle, Check, FileText, FileUp, Minus, Plus } from 'lucide-react-native';
 import React, { useRef, useState } from 'react';
-import { ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown, LinearTransition } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enter, PressableScale, rise, pop } from '../components/motion';
@@ -81,8 +81,9 @@ export const ImportPdfScreen = ({ navigation }: ScreenProps<'ImportPdf'>) => {
     };
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1, backgroundColor: C.fog }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" contentContainerStyle={{ paddingTop: insets.top + 12, paddingHorizontal: 20, paddingBottom: 20, gap: 12 }}>
+        // No KeyboardAvoidingView: the add button stays at the bottom while an exam is edited.
+        <View style={{ flex: 1, backgroundColor: C.fog }}>
+            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" automaticallyAdjustKeyboardInsets contentContainerStyle={{ paddingTop: insets.top + 12, paddingHorizontal: 20, paddingBottom: 20, gap: 12 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
                     <BackButton label={t('back')} />
                     <Text style={styles.h1}>{t('importTitle')}</Text>
@@ -209,7 +210,7 @@ export const ImportPdfScreen = ({ navigation }: ScreenProps<'ImportPdf'>) => {
                     <PrimaryButton label={t('addN', { n: chosen.filter((e) => e.cfu > 0).length })} disabled={!chosen.some((e) => e.cfu > 0)} onPress={save} />
                 </Animated.View>
             )}
-        </KeyboardAvoidingView>
+        </View>
     );
 };
 
