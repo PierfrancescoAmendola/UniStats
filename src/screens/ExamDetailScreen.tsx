@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react-native';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Keyboard, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -30,6 +30,10 @@ export const ExamDetailScreen = ({ navigation, route }: ScreenProps<'ExamDetail'
     const noteRef = useRef(exam?.note ?? '');
     const scroll = useRef<ScrollView>(null);
     const editingNote = useRef(false);
+    // The notes field does not grow by itself here (it scrolled inside and hid lines), so an invisible
+    // copy of the text with the same font measures the height the field needs.
+    const [noteText, setNoteText] = useState(exam?.note ?? '');
+    const [noteHeight, setNoteHeight] = useState(44);
     // The notes field sits at the bottom: once the keyboard is up, scroll so the text being typed stays visible.
     useEffect(() => {
         const sub = Keyboard.addListener('keyboardDidShow', () => {
@@ -160,20 +164,37 @@ export const ExamDetailScreen = ({ navigation, route }: ScreenProps<'ExamDetail'
                     <Text style={styles.lbl}>{t('notes')}</Text>
                     <TextInput
                         defaultValue={noteRef.current}
-                        onChangeText={(v) => (noteRef.current = v)}
+                        onChangeText={(v) => {
+                            noteRef.current = v;
+                            setNoteText(v);
+                        }}
                         onFocus={() => (editingNote.current = true)}
                         onEndEditing={() => {
                             editingNote.current = false;
                             upsertExam({ ...exam, note: noteRef.current.trim() || undefined });
                         }}
-                        // A new line makes the field taller: keep its last line above the keyboard.
-                        onContentSizeChange={() => editingNote.current && scroll.current?.scrollToEnd({ animated: false })}
+                        scrollEnabled={false}
                         placeholder={t('notesPlaceholder')}
                         placeholderTextColor={C.placeholder}
                         accessibilityLabel={t('notes')}
                         multiline
-                        style={{ fontFamily: F.body, fontSize: 15, lineHeight: 21, color: C.text, minHeight: 44, padding: 0 }}
+                        style={[styles.note, { height: noteHeight }]}
                     />
+                    <Text
+                        style={[styles.note, styles.noteMeasure]}
+                        accessibilityElementsHidden
+                        importantForAccessibility="no-hide-descendants"
+                        onLayout={(e) => {
+                            const h = Math.max(44, Math.ceil(e.nativeEvent.layout.height));
+                            if (h === noteHeight) return;
+                            setNoteHeight(h);
+                            // A taller field: keep its last line above the keyboard.
+                            if (editingNote.current) requestAnimationFrame(() => scroll.current?.scrollToEnd({ animated: false }));
+                        }}
+                    >
+                        {/* A trailing new line still needs room for the empty line under it. */}
+                        {noteText.endsWith('\n') || !noteText ? `${noteText} ` : noteText}
+                    </Text>
                 </Animated.View>
                 <Animated.View entering={enter(5)}>
                     <PressableScale onPress={confirmDelete} style={styles.delete}>
@@ -198,5 +219,7 @@ const styles = themed(() => StyleSheet.create({
     mini: { borderRadius: 999, paddingHorizontal: 8, paddingVertical: 3 },
     lbl: { fontFamily: F.semi, fontSize: 13, color: C.text3 },
     big: { fontFamily: F.display, fontSize: 28, color: C.text },
+    note: { fontFamily: F.body, fontSize: 15, lineHeight: 21, color: C.text, padding: 0 },
+    noteMeasure: { position: 'absolute', left: 16, right: 16, top: 0, opacity: 0, pointerEvents: 'none' },
     delete: { height: 52, borderRadius: 18, backgroundColor: C.coralSoft, alignItems: 'center', justifyContent: 'center' },
 }));
