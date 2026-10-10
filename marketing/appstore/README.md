@@ -5,6 +5,7 @@ Everything App Store Connect needs for the product page, in the six app language
 | Folder | What | Size | Where it goes in App Store Connect |
 |---|---|---|---|
 | `iphone-6.9/<lang>/01–08.png` | iPhone screenshots | 1320 × 2868 | Version › iPhone 6.9" Display |
+| `ipad-13/<lang>/01–08.png` | iPad screenshots: the iPhone ones centred on a blurred copy | 2064 × 2752 | Version › iPad 13" Display |
 | `creative/<lang>/header-3840x1646.png` | Product page header (21:9) | 3840 × 1646 | App Store › Creative assets › Product page header |
 | `creative/<lang>/search-3840x2560.png` | Search results asset (3:2) | 3840 × 2560 | App Store › Creative assets › Search results |
 

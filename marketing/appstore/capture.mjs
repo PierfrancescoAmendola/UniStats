@@ -1,11 +1,11 @@
 // Captures the raw app screens used by the App Store screenshots, for every language.
 //
 //   1. Boot the iPhone simulator, run the dev build and start Metro (npx expo start).
-//   2. node marketing/appstore/capture.mjs [lang ...]
+//   2. SIM_UDID=<udid> node marketing/appstore/capture.mjs [lang ...]
 //
 // The script talks to the running app through the Metro inspector (Chrome DevTools Protocol):
 // it loads the demo transcript from demo.json in the right language, then opens each screen
-// with a unistats:// deep link and saves a simulator screenshot to raw/<lang>/<shot>.png.
+// through the app's navigator and saves a simulator screenshot to raw/<lang>/<shot>.png.
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -16,17 +16,19 @@ const DEVICE = process.env.SIM_UDID ?? 'booted';
 const LANGS = ['it', 'en', 'es', 'fr', 'de', 'pt'];
 const demo = JSON.parse(readFileSync(join(HERE, 'demo.json'), 'utf8'));
 
-// [file name, deep link, theme]
+// [file name, [route, params], theme]. Screens open through the root stack navigator: on iOS 27
+// a simctl deep link asks "Open in UniStats?" every time, which would end up in the shot.
 const SHOTS = [
-    ['home', 'home', 'light'],
-    ['grad', 'tools/grad', 'light'],
-    ['needed', 'tools/needed', 'light'],
-    ['whatif', 'tools/whatif', 'light'],
-    ['transcript', 'transcript', 'light'],
-    ['exam', 'exam/s01', 'light'],
-    ['how', 'tools/how', 'light'],
-    ['university', 'university', 'light'],
-    ['dark', 'home', 'dark'],
+    ['home', ['Tabs', { screen: 'Home' }], 'light'],
+    ['grad', ['GradSim'], 'light'],
+    ['needed', ['Needed'], 'light'],
+    ['whatif', ['WhatIf'], 'light'],
+    ['transcript', ['Tabs', { screen: 'Transcript' }], 'light'],
+    ['exam', ['ExamDetail', { examId: 's01' }], 'light'],
+    ['how', ['HowCalc'], 'light'],
+    ['university', ['University'], 'light'],
+    ['support', ['Support'], 'light'],
+    ['dark', ['Tabs', { screen: 'Home' }], 'dark'],
 ];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -94,7 +96,11 @@ for (const lang of process.argv.slice(2).length ? process.argv.slice(2) : LANGS)
             theme = wanted;
             await sleep(900);
         }
-        simctl('openurl', DEVICE, `unistats://${link}`);
+        const [route, params] = link;
+        await app.evaluate(inApp(`
+            const root = fibers.find((f) => f.memoizedProps && f.memoizedProps.route && f.memoizedProps.route.name === 'Tabs' && f.memoizedProps.navigation);
+            root.memoizedProps.navigation.navigate(${JSON.stringify(route)}, ${JSON.stringify(params ?? {})});
+            return 'ok';`));
         await sleep(1800);
         await app.evaluate(DISMISS_LOGBOX);
         await sleep(400);

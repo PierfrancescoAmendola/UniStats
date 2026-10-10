@@ -1,9 +1,9 @@
 {
     "_comment": "Headline = [line 1, highlighted line 2], sub = subtitle, chips = floating labels. Order matches SHOTS in build.py.",
     "it": {
-        "home": { "h": ["La tua media,", "sempre chiara"], "sub": "Media, CFU e voto di laurea a colpo d’occhio.", "chips": ["+0,07 ultimo esame", "Nessun account"] },
-        "grad": { "h": ["Scopri con quanto", "ti laurei"], "sub": "Tesi, bonus e arrotondamenti del tuo corso.", "chips": ["Lode possibile"] },
-        "needed": { "h": ["Che voto", "ti serve?"], "sub": "Scegli l’obiettivo, i conti li fa UniStats.", "chips": ["28,7 nei prossimi 30 CFU"] },
+        "home": { "h": ["La tua media,", "sempre chiara"], "sub": "Media, CFU e voto di laurea a colpo d’occhio.", "chips": ["+0,06 ultimo esame", "Nessun account"] },
+        "grad": { "h": ["Scopri con quanto", "ti laurei"], "sub": "Tesi, bonus e arrotondamenti del tuo corso.", "chips": ["110 previsto"] },
+        "needed": { "h": ["Che voto", "ti serve?"], "sub": "Scegli l’obiettivo, i conti li fa UniStats.", "chips": ["28,4 nei prossimi 30 CFU"] },
         "whatif": { "h": ["Prova gli esami", "prima di darli"], "sub": "Simula i voti e guarda la media cambiare.", "chips": ["Esami ipotetici"] },
         "transcript": { "h": ["Il libretto", "in tasca"], "sub": "Importa il PDF del tuo ateneo in pochi secondi.", "chips": ["Importa PDF"] },
         "exam": { "h": ["Ogni esame", "conta"], "sub": "Scopri quanto pesa ogni voto sulla media.", "chips": ["30 e lode"] },
@@ -11,9 +11,9 @@
         "dark": { "h": ["Bella anche", "di notte"], "sub": "Tema scuro, 6 lingue, dati solo sul telefono.", "chips": ["Tema scuro"] }
     },
     "en": {
-        "home": { "h": ["Your average,", "always clear"], "sub": "Average, credits and final grade at a glance.", "chips": ["+0.07 last exam", "No account"] },
-        "grad": { "h": ["See what you’ll", "graduate with"], "sub": "Thesis, bonuses and rounding of your course.", "chips": ["Honours possible"] },
-        "needed": { "h": ["What grade", "do you need?"], "sub": "Pick a goal, UniStats does the math.", "chips": ["28.7 in the next 30 CFU"] },
+        "home": { "h": ["Your average,", "always clear"], "sub": "Average, credits and final grade at a glance.", "chips": ["+0.06 last exam", "No account"] },
+        "grad": { "h": ["See what you’ll", "graduate with"], "sub": "Thesis, bonuses and rounding of your course.", "chips": ["110 expected"] },
+        "needed": { "h": ["What grade", "do you need?"], "sub": "Pick a goal, UniStats does the math.", "chips": ["28.4 in the next 30 CFU"] },
         "whatif": { "h": ["Try exams", "before you take them"], "sub": "Simulate grades and watch your average move.", "chips": ["Hypothetical exams"] },
         "transcript": { "h": ["Your transcript", "in your pocket"], "sub": "Import your university PDF in seconds.", "chips": ["Import PDF"] },
         "exam": { "h": ["Every exam", "counts"], "sub": "See how much each grade weighs on your average.", "chips": ["30 with honours"] },
@@ -21,9 +21,9 @@
         "dark": { "h": ["Beautiful", "at night too"], "sub": "Dark mode, 6 languages, data stays on your phone.", "chips": ["Dark mode"] }
     },
     "es": {
-        "home": { "h": ["Tu media,", "siempre clara"], "sub": "Media, créditos y nota final de un vistazo.", "chips": ["+0,07 último examen", "Sin cuenta"] },
-        "grad": { "h": ["Descubre con qué", "nota te gradúas"], "sub": "Tesis, bonus y redondeos de tu carrera.", "chips": ["Matrícula posible"] },
-        "needed": { "h": ["¿Qué nota", "necesitas?"], "sub": "Elige el objetivo, UniStats hace las cuentas.", "chips": ["28,7 en los próximos 30 CFU"] },
+        "home": { "h": ["Tu media,", "siempre clara"], "sub": "Media, créditos y nota final de un vistazo.", "chips": ["+0,06 último examen", "Sin cuenta"] },
+        "grad": { "h": ["Descubre con qué", "nota te gradúas"], "sub": "Tesis, bonus y redondeos de tu carrera.", "chips": ["110 previsto"] },
+        "needed": { "h": ["¿Qué nota", "necesitas?"], "sub": "Elige el objetivo, UniStats hace las cuentas.", "chips": ["28,4 en los próximos 30 CFU"] },
         "whatif": { "h": ["Prueba los exámenes", "antes de hacerlos"], "sub": "Simula notas y mira cómo cambia tu media.", "chips": ["Exámenes hipotéticos"] },
         "transcript": { "h": ["Tu expediente", "en el bolsillo"], "sub": "Importa el PDF de tu universidad en segundos.", "chips": ["Importar PDF"] },
         "exam": { "h": ["Cada examen", "cuenta"], "sub": "Descubre cuánto pesa cada nota en tu media.", "chips": ["30 con matrícula"] },
@@ -31,9 +31,9 @@
         "dark": { "h": ["Bonita", "también de noche"], "sub": "Tema oscuro, 6 idiomas, datos solo en tu móvil.", "chips": ["Tema oscuro"] }
     },
     "fr": {
-        "home": { "h": ["Ta moyenne,", "toujours claire"], "sub": "Moyenne, crédits et note finale d’un coup d’œil.", "chips": ["+0,07 dernier examen", "Sans compte"] },
-        "grad": { "h": ["Découvre ta note", "de diplôme"], "sub": "Mémoire, bonus et arrondis de ta filière.", "chips": ["Mention possible"] },
-        "needed": { "h": ["Quelle note", "te faut-il ?"], "sub": "Choisis l’objectif, UniStats fait les calculs.", "chips": ["28,7 sur les 30 prochains CFU"] },
+        "home": { "h": ["Ta moyenne,", "toujours claire"], "sub": "Moyenne, crédits et note finale d’un coup d’œil.", "chips": ["+0,06 dernier examen", "Sans compte"] },
+        "grad": { "h": ["Découvre ta note", "de diplôme"], "sub": "Mémoire, bonus et arrondis de ta filière.", "chips": ["110 prévu"] },
+        "needed": { "h": ["Quelle note", "te faut-il ?"], "sub": "Choisis l’objectif, UniStats fait les calculs.", "chips": ["28,4 sur les 30 prochains CFU"] },
         "whatif": { "h": ["Teste tes examens", "avant de les passer"], "sub": "Simule des notes et regarde ta moyenne bouger.", "chips": ["Examens hypothétiques"] },
         "transcript": { "h": ["Ton relevé", "dans la poche"], "sub": "Importe le PDF de ton université en quelques secondes.", "chips": ["Importer le PDF"] },
         "exam": { "h": ["Chaque examen", "compte"], "sub": "Découvre le poids de chaque note sur ta moyenne.", "chips": ["30 avec mention"] },
@@ -41,9 +41,9 @@
         "dark": { "h": ["Belle", "même la nuit"], "sub": "Thème sombre, 6 langues, données sur ton téléphone.", "chips": ["Thème sombre"] }
     },
     "de": {
-        "home": { "h": ["Dein Schnitt,", "immer klar"], "sub": "Schnitt, Credits und Abschlussnote auf einen Blick.", "chips": ["+0,07 letzte Prüfung", "Kein Konto"] },
-        "grad": { "h": ["Deine", "Abschlussnote"], "sub": "Arbeit, Boni und Rundung deines Studiengangs.", "chips": ["Auszeichnung möglich"] },
-        "needed": { "h": ["Welche Note", "brauchst du?"], "sub": "Wähle dein Ziel, UniStats rechnet.", "chips": ["28,7 in den nächsten 30 CFU"] },
+        "home": { "h": ["Dein Schnitt,", "immer klar"], "sub": "Schnitt, Credits und Abschlussnote auf einen Blick.", "chips": ["+0,06 letzte Prüfung", "Kein Konto"] },
+        "grad": { "h": ["Deine", "Abschlussnote"], "sub": "Arbeit, Boni und Rundung deines Studiengangs.", "chips": ["110 erwartet"] },
+        "needed": { "h": ["Welche Note", "brauchst du?"], "sub": "Wähle dein Ziel, UniStats rechnet.", "chips": ["28,4 in den nächsten 30 CFU"] },
         "whatif": { "h": ["Prüfungen testen,", "bevor du sie schreibst"], "sub": "Simuliere Noten und sieh deinen Schnitt.", "chips": ["Hypothetische Prüfungen"] },
         "transcript": { "h": ["Deine Noten", "in der Tasche"], "sub": "Importiere das PDF deiner Uni in Sekunden.", "chips": ["PDF importieren"] },
         "exam": { "h": ["Jede Prüfung", "zählt"], "sub": "Sieh, wie stark jede Note deinen Schnitt prägt.", "chips": ["30 mit Auszeichnung"] },
@@ -51,9 +51,9 @@
         "dark": { "h": ["Schön, auch", "bei Nacht"], "sub": "Dunkelmodus, 6 Sprachen, Daten nur auf dem Handy.", "chips": ["Dunkelmodus"] }
     },
     "pt": {
-        "home": { "h": ["Sua média,", "sempre clara"], "sub": "Média, créditos e nota final num relance.", "chips": ["+0,07 último exame", "Sem conta"] },
-        "grad": { "h": ["Descubra com quanto", "vai se formar"], "sub": "TCC, bônus e arredondamentos do seu curso.", "chips": ["Louvor possível"] },
-        "needed": { "h": ["Que nota", "você precisa?"], "sub": "Escolha a meta, o UniStats faz as contas.", "chips": ["28,7 nos próximos 30 CFU"] },
+        "home": { "h": ["Sua média,", "sempre clara"], "sub": "Média, créditos e nota final num relance.", "chips": ["+0,06 último exame", "Sem conta"] },
+        "grad": { "h": ["Descubra com quanto", "vai se formar"], "sub": "TCC, bônus e arredondamentos do seu curso.", "chips": ["110 previsto"] },
+        "needed": { "h": ["Que nota", "você precisa?"], "sub": "Escolha a meta, o UniStats faz as contas.", "chips": ["28,4 nos próximos 30 CFU"] },
         "whatif": { "h": ["Teste os exames", "antes de fazê-los"], "sub": "Simule notas e veja sua média mudar.", "chips": ["Exames hipotéticos"] },
         "transcript": { "h": ["Seu histórico", "no bolso"], "sub": "Importe o PDF da sua universidade em segundos.", "chips": ["Importar PDF"] },
         "exam": { "h": ["Cada exame", "conta"], "sub": "Veja quanto pesa cada nota na sua média.", "chips": ["30 com louvor"] },
