@@ -398,5 +398,13 @@ export const PRESETS: Rule[] = [
 export const presetsFor = (universityId: string | null, level: Level): Rule[] =>
     universityId ? PRESETS.filter((r) => r.universityId === universityId && r.levels.includes(level)) : [];
 
+/**
+ * The rule picked by default when the student chooses a university: only a rule valid for the whole
+ * university. A course rule (e.g. Federico II Informatica) is never picked for the student, since
+ * other courses of the same university use other formulas; they choose it themselves.
+ */
+export const universityWideRule = (universityId: string | null, level: Level): Rule | undefined =>
+    presetsFor(universityId, level).find((r) => r.scopeLabel === 'Ateneo');
+
 export const findRule = (id: string): Rule | undefined =>
     PRESETS.find((r) => r.id === id) ?? Object.values(NATIONAL_DEFAULTS).find((r) => r.id === id);

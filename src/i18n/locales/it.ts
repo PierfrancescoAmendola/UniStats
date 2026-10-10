@@ -68,6 +68,7 @@ const it: Dict = {
     ruleNational: 'Regole standard',
     ruleNationalSub: 'Valori nazionali, modificabili',
     rulesCheck: 'Ogni corso ha le sue regole: controllale',
+    rulesCourseHint: 'Scegli un corso solo se è il tuo: le regole cambiano da corso a corso. Altrimenti usa le regole standard e personalizzale.',
     rulesFrom: 'Prese dal regolamento, puoi modificarle',
     creditsToGraduate: 'CFU per laurearti',
     lodeCountsAs: 'Nella media la lode vale',

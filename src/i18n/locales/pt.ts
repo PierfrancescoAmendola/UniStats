@@ -72,6 +72,7 @@ const pt: Dict = {
     ruleNational: 'Regras padrão',
     ruleNationalSub: 'Valores nacionais, editáveis',
     rulesCheck: 'Cada curso tem suas regras: confira',
+    rulesCourseHint: 'Escolha um curso só se for o seu: as regras mudam de curso para curso. Se não, use as regras padrão e personalize-as.',
     rulesFrom: 'Do regulamento, você pode editá-las',
     creditsToGraduate: 'Créditos para se formar',
     lodeCountsAs: 'O louvor (30L) conta na média como',

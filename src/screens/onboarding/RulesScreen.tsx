@@ -20,7 +20,9 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
     const edit = route.params?.edit;
     const uni = findUniversity(p.universityId);
     const presets = presetsFor(p.universityId, p.level);
-    const options = [...presets, NATIONAL_DEFAULTS[p.level]];
+    // Standard rules first: a course rule applies only to that course, so it is never the obvious pick.
+    const options = [NATIONAL_DEFAULTS[p.level], ...presets.filter((r) => r.scopeLabel === 'Ateneo'), ...presets.filter((r) => r.scopeLabel !== 'Ateneo')];
+    const hasCourseRules = presets.some((r) => r.scopeLabel !== 'Ateneo');
     const rule = resolveRule(p);
     const activeId = p.customRule ? null : rule.id;
     const color = uni ? MONO_COLORS[UNIVERSITIES.indexOf(uni) % MONO_COLORS.length] : C.sun;
@@ -102,6 +104,7 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
 
                 <Animated.View entering={enter(3)} style={{ gap: 8 }}>
                     <Text style={styles.kicker}>{t('rulesAvailable')}</Text>
+                    {hasCourseRules && <Text style={styles.hint}>{t('rulesCourseHint')}</Text>}
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                         {options.map((o) => {
                             const sel = o.id === activeId;
@@ -156,6 +159,7 @@ const styles = themed(() => StyleSheet.create({
     fieldNum: { fontFamily: F.display, fontSize: 18, color: C.text },
     mini: { width: 28, height: 28, borderRadius: 9, backgroundColor: C.fog, alignItems: 'center', justifyContent: 'center' },
     kicker: { fontFamily: F.bold, fontSize: 13, letterSpacing: 1, textTransform: 'uppercase', color: C.text3 },
+    hint: { fontFamily: F.body, fontSize: 14, lineHeight: 20, color: C.text3 },
     ruleChip: { paddingHorizontal: 14, paddingVertical: 9, borderRadius: 999, backgroundColor: C.surface },
     ruleChipTxt: { fontFamily: F.semi, fontSize: 14, color: C.text },
     dark: { backgroundColor: C.ink, borderRadius: 26, padding: 18 },

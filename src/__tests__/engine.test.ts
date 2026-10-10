@@ -3,7 +3,7 @@ import { computeGraduation } from '../engine/graduation';
 import { roundWith } from '../engine/math';
 import { deltaFor, neededAverage } from '../engine/needed';
 import { Exam, Rule } from '../engine/types';
-import { NATIONAL_DEFAULTS, PRESETS, findRule } from '../data/presets';
+import { NATIONAL_DEFAULTS, PRESETS, findRule, universityWideRule } from '../data/presets';
 
 let n = 0;
 const ex = (grade: number | null, cfu: number, lode = false): Exam => ({
@@ -194,6 +194,13 @@ describe('needed', () => {
 });
 
 describe('presets', () => {
+    it('picks only a university-wide rule by default, never a course rule', () => {
+        // Federico II has course rules only (Informatica, Giurisprudenza): a biology student must not get them.
+        expect(universityWideRule('unina', 'L')).toBeUndefined();
+        expect(universityWideRule('unina', 'LMCU')).toBeUndefined();
+        expect(universityWideRule('polimi', 'L')?.id).toBe('polimi-L-LM');
+    });
+
     it('have unique ids and valid thesis ranges', () => {
         const ids = PRESETS.map((p) => p.id);
         expect(new Set(ids).size).toBe(ids.length);

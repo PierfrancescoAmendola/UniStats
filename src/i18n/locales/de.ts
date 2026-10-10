@@ -72,6 +72,7 @@ const de: Dict = {
     ruleNational: 'Standardregeln',
     ruleNationalSub: 'Nationale Werte, anpassbar',
     rulesCheck: 'Jeder Studiengang hat eigene Regeln: prüfe sie',
+    rulesCourseHint: 'Wähle einen Studiengang nur, wenn es deiner ist: Die Regeln sind je Studiengang verschieden. Sonst nimm die Standardregeln und passe sie an.',
     rulesFrom: 'Aus der Prüfungsordnung, du kannst sie ändern',
     creditsToGraduate: 'Credits zum Abschluss',
     lodeCountsAs: 'Auszeichnung (30L) zählt im Schnitt als',

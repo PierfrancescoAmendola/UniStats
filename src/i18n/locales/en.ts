@@ -70,6 +70,7 @@ const en = {
     ruleNational: 'Standard rules',
     ruleNationalSub: 'National defaults, editable',
     rulesCheck: 'Each course has its own rules: check them',
+    rulesCourseHint: 'Pick a course only if it is yours: rules change from course to course. Otherwise use the standard rules and customise them.',
     rulesFrom: 'From the regulation, you can edit them',
     creditsToGraduate: 'Credits to graduate',
     lodeCountsAs: 'Honours (30L) count in the average as',

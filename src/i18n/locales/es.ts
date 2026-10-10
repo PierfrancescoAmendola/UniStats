@@ -68,6 +68,7 @@ const es: Dict = {
     ruleNational: 'Reglas estándar',
     ruleNationalSub: 'Valores nacionales, editables',
     rulesCheck: 'Cada carrera tiene sus reglas: compruébalas',
+    rulesCourseHint: 'Elige una carrera solo si es la tuya: las reglas cambian de una carrera a otra. Si no, usa las reglas estándar y personalízalas.',
     rulesFrom: 'Del reglamento, puedes editarlas',
     creditsToGraduate: 'Créditos para graduarte',
     lodeCountsAs: 'La matrícula de honor (30L) cuenta en la media como',

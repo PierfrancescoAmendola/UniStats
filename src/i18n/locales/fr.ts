@@ -72,6 +72,7 @@ const fr: Dict = {
     ruleNational: 'Règles standard',
     ruleNationalSub: 'Valeurs nationales, modifiables',
     rulesCheck: 'Chaque filière a ses règles : vérifie-les',
+    rulesCourseHint: "Choisis une filière seulement si c'est la tienne : les règles changent d'une filière à l'autre. Sinon, utilise les règles standard et personnalise-les.",
     rulesFrom: 'Tirées du règlement, tu peux les modifier',
     creditsToGraduate: 'Crédits pour le diplôme',
     lodeCountsAs: 'La mention (30L) compte dans la moyenne comme',

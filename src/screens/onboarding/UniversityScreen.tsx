@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enter, PressableScale, pop } from '../../components/motion';
 import { dismissKeyboardOnTap, PrimaryButton, ProgressHeader } from '../../components/ui';
 import { searchUniversities, UniKind, University, UNIVERSITIES } from '../../data/universities';
-import { presetsFor } from '../../data/presets';
+import { universityWideRule } from '../../data/presets';
 import { ScreenProps } from '../../navigation/types';
 import { useApp } from '../../store/AppStore';
 import { C, F, MONO_COLORS, themed } from '../../theme/tokens';
@@ -50,10 +50,10 @@ export const UniversityScreen = ({ navigation, route }: ScreenProps<'University'
     const choose = (id: string | null) => {
         const level = state.profile.level;
         const changed = id !== state.profile.universityId;
-        const first = presetsFor(id, level)[0];
+        const wide = universityWideRule(id, level);
         setProfile({
             universityId: id,
-            ...(changed ? { ruleId: first?.id ?? `default-${level}`, customRule: null, bonusInput: {} } : {}),
+            ...(changed ? { ruleId: wide?.id ?? `default-${level}`, customRule: null, bonusInput: {} } : {}),
         });
         navigation.navigate('Rules', edit ? { edit } : undefined);
     };
