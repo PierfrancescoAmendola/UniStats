@@ -4,13 +4,14 @@ import { roundWith } from '../engine/math';
 import { deltaFor, neededAverage } from '../engine/needed';
 import { Exam, Rule } from '../engine/types';
 import { NATIONAL_DEFAULTS, PRESETS, findRule, universityWideRule } from '../data/presets';
+import { COURSE_RULES } from './fixtures/courseRules';
 
 let n = 0;
 const ex = (grade: number | null, cfu: number, lode = false): Exam => ({
     id: `e${++n}`, name: `Exam ${n}`, grade, cfu, lode, date: '2025-01-01', year: 1,
 });
 const rule = (id: string): Rule => {
-    const r = findRule(id);
+    const r = findRule(id) ?? COURSE_RULES.find((x) => x.id === id);
     if (!r) throw new Error(`missing rule ${id}`);
     return r;
 };
@@ -193,11 +194,26 @@ describe('needed', () => {
     });
 });
 
+describe('rules built in the editor', () => {
+    it('reproduce Federico II Informatica with the standard rules plus two bonuses', () => {
+        // What a student types in the editor: thesis 1-6, on time 5 / one year late 2, average 81 -> 110 up to 4.
+        const r: Rule = {
+            ...NATIONAL_DEFAULTS.L,
+            finalExam: { min: 1, max: 6 },
+            bonuses: [
+                { id: 'a', kind: 'onTime', tiers: [{ label: 'onTime', points: 5 }, { label: 'oneYearLate', points: 2 }] },
+                { id: 'b', kind: 'averageLinear', from: 81, to: 110, maxPoints: 4, minBase: 81 },
+            ],
+        };
+        const a = computeAverage([ex(25, 21), ex(26, 9)], r);
+        expect(computeGraduation(a, r, 6, { a: 0 }).final).toBe(105);
+    });
+});
+
 describe('presets', () => {
-    it('picks only a university-wide rule by default, never a course rule', () => {
-        // Federico II has course rules only (Informatica, Giurisprudenza): a biology student must not get them.
+    it('ship only university-wide rules, so no course gets a rule the others lack', () => {
+        for (const p of PRESETS) expect(p.scopeLabel).toBe('Ateneo');
         expect(universityWideRule('unina', 'L')).toBeUndefined();
-        expect(universityWideRule('unina', 'LMCU')).toBeUndefined();
         expect(universityWideRule('polimi', 'L')?.id).toBe('polimi-L-LM');
     });
 

@@ -72,7 +72,6 @@ const pt: Dict = {
     ruleNational: 'Regras padrão',
     ruleNationalSub: 'Valores nacionais, editáveis',
     rulesCheck: 'Cada curso tem suas regras: confira',
-    rulesCourseHint: 'Escolha um curso só se for o seu: as regras mudam de curso para curso. Se não, use as regras padrão e personalize-as.',
     rulesFrom: 'Do regulamento, você pode editá-las',
     creditsToGraduate: 'Créditos para se formar',
     lodeCountsAs: 'O louvor (30L) conta na média como',
@@ -360,6 +359,14 @@ const pt: Dict = {
     rulesNote: 'As regras mudam conforme o curso e o ano de matrícula. Confira o regulamento de formatura do seu curso.',
     lodeUnverified: 'Valor do louvor não confirmado no regulamento.',
     customBonusDefault: 'Meu bônus',
+    bonusType: 'Tipo de bônus',
+    bonusType_flag: 'Sim ou não',
+    perLodePoints: 'Pontos por cada louvor',
+    bonusMax: 'No máximo',
+    avgFromBase: 'Começa na base',
+    avgToBase: 'Completo a partir da base',
+    avgBonusHint: '0 pontos na base inicial, o máximo na base completa, proporcional entre as duas.',
+    rulesNoUniRule: 'Sua universidade não tem uma regra única: cada curso tem a sua. Comece pelas regras padrão e adapte-as ao regulamento do seu curso em "Personalizar as regras".',
 
     // Milestone
     savedTitle: '{name}, feito!',

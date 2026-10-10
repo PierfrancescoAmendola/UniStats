@@ -6,12 +6,16 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { enter, PressableScale, Toggle, LAYOUT } from '../components/motion';
 import { BackButton } from '../components/ui';
 import { computeAverage } from '../engine/average';
-import { Rule, RoundingMode } from '../engine/types';
-import { formatNumber } from '../i18n';
+import { Bonus, Rule, RoundingMode } from '../engine/types';
+import { formatNumber, translateLoose } from '../i18n';
 import { ScreenProps } from '../navigation/types';
 import { useApp } from '../store/AppStore';
 import { C, F, themed } from '../theme/tokens';
 import { bonusSize, bonusTitle, ruleName } from '../utils/ruleText';
+
+type NewBonusKind = 'flag' | 'onTime' | 'lodeCount' | 'averageLinear';
+const NEW_KINDS: NewBonusKind[] = ['flag', 'onTime', 'lodeCount', 'averageLinear'];
+const F110 = 110 / 30;
 
 const CONF_TONE = themed(() => ({
     verified: { bg: C.mintSoft, fg: C.greenText },
@@ -28,6 +32,13 @@ export const RulesEditScreen = (_: ScreenProps<'RulesEdit'>) => {
     const bonusNameRef = useRef('');
     const bonusInput = useRef<TextInput>(null);
     const [bonusPts, setBonusPts] = useState(1);
+    // New bonus being built: its kind and the numbers each kind needs.
+    const [newKind, setNewKind] = useState<NewBonusKind>('flag');
+    const [late, setLate] = useState(0);
+    const [perLode, setPerLode] = useState(0.25);
+    const [lodeMax, setLodeMax] = useState<number | null>(null);
+    const [avgFrom, setAvgFrom] = useState(81);
+    const [avgTo, setAvgTo] = useState(110);
 
     const edit = (patch: (r: Rule) => Rule) => {
         const next = patch(JSON.parse(JSON.stringify(rule)) as Rule);
@@ -61,6 +72,38 @@ export const RulesEditScreen = (_: ScreenProps<'RulesEdit'>) => {
             </PressableScale>
         </View>
     );
+
+    /** Stepper for numbers with decimals (bonus points, 0.5 or 0.05 at a time). */
+    const stepperN = (value: number, onChange: (v: number) => void, lo: number, hi: number, step: number) => (
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            <PressableScale accessibilityLabel="−" onPress={() => onChange(Math.max(lo, Math.round((value - step) * 100) / 100))} style={styles.step}>
+                <Minus size={16} strokeWidth={2.6} color={C.text} />
+            </PressableScale>
+            <Text style={[styles.stepVal, { minWidth: 44 }]}>{formatNumber(lang, value, value % 1 ? 2 : 0).replace(/([.,]\d)0$/, '$1')}</Text>
+            <PressableScale accessibilityLabel="+" onPress={() => onChange(Math.min(hi, Math.round((value + step) * 100) / 100))} style={styles.step}>
+                <Plus size={16} strokeWidth={2.6} color={C.text} />
+            </PressableScale>
+        </View>
+    );
+
+    const addNewBonus = () => {
+        const id = `custom-${Date.now()}`;
+        let b: Bonus;
+        if (newKind === 'onTime') {
+            const tiers = [{ label: 'onTime', points: bonusPts }];
+            if (late > 0) tiers.push({ label: 'oneYearLate', points: late });
+            b = { id, kind: 'onTime', tiers };
+        } else if (newKind === 'lodeCount') {
+            b = { id, kind: 'lodeCount', perLode, ...(lodeMax != null ? { max: lodeMax } : {}) };
+        } else if (newKind === 'averageLinear') {
+            b = { id, kind: 'averageLinear', from: avgFrom, to: avgTo, maxPoints: bonusPts, minBase: avgFrom };
+        } else {
+            b = { id, kind: 'flag', label: bonusNameRef.current.trim() || t('customBonusDefault'), points: bonusPts };
+            bonusNameRef.current = '';
+            bonusInput.current?.clear();
+        }
+        edit((r) => ({ ...r, bonuses: [...r.bonuses, b] }));
+    };
 
     const line = (label: string, right: React.ReactNode, last = false) => (
         <View style={[styles.line, !last && { borderBottomWidth: 1, borderBottomColor: C.line }]}>
@@ -162,7 +205,7 @@ export const RulesEditScreen = (_: ScreenProps<'RulesEdit'>) => {
                     <View style={[styles.line, { flexDirection: 'column', alignItems: 'stretch', gap: 8 }]}>
                         <Text style={styles.lineLbl}>{t('lodeMinBase')}</Text>
                         {chips(
-                            [null, 102, 103, 104, 105].map((v) => ({ v, label: v === null ? t('noneLabel') : String(v) })),
+                            [null, 102, 103, 104, 105, 28 * F110].map((v) => ({ v, label: v === null ? t('noneLabel') : Number.isInteger(v) ? String(v) : '≥ 28/30' })),
                             rule.lode.minBase,
                             (v) => edit((r) => ({ ...r, lode: { ...r.lode, minBase: v } })),
                         )}
@@ -180,26 +223,55 @@ export const RulesEditScreen = (_: ScreenProps<'RulesEdit'>) => {
                             </PressableScale>
                         </Animated.View>
                     ))}
-                    <View style={[styles.line, { gap: 8 }]}>
-                        <TextInput
-                            ref={bonusInput}
-                            onChangeText={(v) => (bonusNameRef.current = v)}
-                            placeholder={t('bonusName')}
-                            placeholderTextColor={C.placeholder}
-                            accessibilityLabel={t('bonusName')}
-                            style={{ flex: 1, fontFamily: F.semi, fontSize: 15, color: C.text, padding: 0 }}
-                        />
-                        {stepper(bonusPts, setBonusPts, 1, 10)}
+                    <View style={[styles.line, { flexDirection: 'column', alignItems: 'stretch', gap: 8, borderBottomWidth: 1, borderBottomColor: C.line }]}>
+                        <Text style={styles.lineLbl}>{t('bonusType')}</Text>
+                        {chips(
+                            NEW_KINDS.map((k) => ({ v: k, label: k === 'flag' ? t('bonusType_flag') : t(`bonusKind_${k}` as const) })),
+                            newKind,
+                            setNewKind,
+                        )}
                     </View>
-                    <PressableScale
-                        onPress={() => {
-                            const label = bonusNameRef.current.trim() || t('customBonusDefault');
-                            edit((r) => ({ ...r, bonuses: [...r.bonuses, { id: `custom-${Date.now()}`, kind: 'flag', label, points: bonusPts }] }));
-                            bonusNameRef.current = '';
-                            bonusInput.current?.clear();
-                        }}
-                        style={styles.addBonus}
-                    >
+                    {newKind === 'flag' && (
+                        <View style={[styles.line, { gap: 8 }]}>
+                            <TextInput
+                                ref={bonusInput}
+                                onChangeText={(v) => (bonusNameRef.current = v)}
+                                placeholder={t('bonusName')}
+                                placeholderTextColor={C.placeholder}
+                                accessibilityLabel={t('bonusName')}
+                                style={{ flex: 1, fontFamily: F.semi, fontSize: 15, color: C.text, padding: 0 }}
+                            />
+                            {stepperN(bonusPts, setBonusPts, 0.5, 15, 0.5)}
+                        </View>
+                    )}
+                    {newKind === 'onTime' && (
+                        <>
+                            {line(translateLoose(lang, 'onTime'), stepperN(bonusPts, setBonusPts, 0.5, 15, 0.5))}
+                            {line(translateLoose(lang, 'oneYearLate'), stepperN(late, setLate, 0, 15, 0.5), true)}
+                        </>
+                    )}
+                    {newKind === 'lodeCount' && (
+                        <>
+                            {line(t('perLodePoints'), stepperN(perLode, setPerLode, 0.05, 3, 0.05))}
+                            <View style={[styles.line, { flexDirection: 'column', alignItems: 'stretch', gap: 8 }]}>
+                                <Text style={styles.lineLbl}>{t('bonusMax')}</Text>
+                                {chips(
+                                    [null, 0.5, 1, 1.5, 2, 3].map((v) => ({ v, label: v === null ? t('noneLabel') : formatNumber(lang, v, v % 1 ? 1 : 0) })),
+                                    lodeMax,
+                                    setLodeMax,
+                                )}
+                            </View>
+                        </>
+                    )}
+                    {newKind === 'averageLinear' && (
+                        <>
+                            {line(t('avgFromBase'), stepper(avgFrom, (v) => setAvgFrom(Math.min(v, avgTo - 1)), 66, 109))}
+                            {line(t('avgToBase'), stepper(avgTo, (v) => setAvgTo(Math.max(v, avgFrom + 1)), 67, 110))}
+                            {line(t('bonusMax'), stepperN(bonusPts, setBonusPts, 0.5, 15, 0.5), true)}
+                            <Text style={[styles.hintTxt, { paddingHorizontal: 16, paddingBottom: 10 }]}>{t('avgBonusHint')}</Text>
+                        </>
+                    )}
+                    <PressableScale onPress={addNewBonus} style={styles.addBonus}>
                         <Plus size={18} strokeWidth={2.4} color={C.violet} />
                         <Text style={{ fontFamily: F.bold, fontSize: 15, color: C.violet }}>{t('addBonus')}</Text>
                     </PressableScale>
@@ -231,5 +303,6 @@ const styles = themed(() => StyleSheet.create({
     step: { width: 32, height: 32, borderRadius: 10, backgroundColor: C.fog, alignItems: 'center', justifyContent: 'center' },
     stepVal: { fontFamily: F.display, fontSize: 18, color: C.text, minWidth: 26, textAlign: 'center' },
     addBonus: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingVertical: 14, borderTopWidth: 1, borderTopColor: C.line },
+    hintTxt: { fontFamily: F.body, fontSize: 13, lineHeight: 18, color: C.text3 },
     restore: { height: 52, borderRadius: 18, backgroundColor: C.sun, alignItems: 'center', justifyContent: 'center' },
 }));

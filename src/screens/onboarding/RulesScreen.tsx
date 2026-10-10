@@ -20,9 +20,7 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
     const edit = route.params?.edit;
     const uni = findUniversity(p.universityId);
     const presets = presetsFor(p.universityId, p.level);
-    // Standard rules first: a course rule applies only to that course, so it is never the obvious pick.
-    const options = [NATIONAL_DEFAULTS[p.level], ...presets.filter((r) => r.scopeLabel === 'Ateneo'), ...presets.filter((r) => r.scopeLabel !== 'Ateneo')];
-    const hasCourseRules = presets.some((r) => r.scopeLabel !== 'Ateneo');
+    const options = [...presets, NATIONAL_DEFAULTS[p.level]];
     const rule = resolveRule(p);
     const activeId = p.customRule ? null : rule.id;
     const color = uni ? MONO_COLORS[UNIVERSITIES.indexOf(uni) % MONO_COLORS.length] : C.sun;
@@ -104,8 +102,8 @@ export const RulesScreen = ({ navigation, route }: ScreenProps<'Rules'>) => {
 
                 <Animated.View entering={enter(3)} style={{ gap: 8 }}>
                     <Text style={styles.kicker}>{t('rulesAvailable')}</Text>
-                    {hasCourseRules && <Text style={styles.hint}>{t('rulesCourseHint')}</Text>}
-                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+                    {presets.length === 0 && !p.customRule && <Text style={styles.hint}>{t('rulesNoUniRule')}</Text>}
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, display: presets.length ? 'flex' : 'none' }}>
                         {options.map((o) => {
                             const sel = o.id === activeId;
                             const label = o.provenance.confidence === 'default' ? t('ruleNational') : o.scopeLabel === 'Ateneo' ? uni?.name ?? o.scopeLabel : o.scopeLabel;

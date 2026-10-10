@@ -6,8 +6,9 @@ import { computeGraduation, MAX_GRADE } from '../engine/graduation';
 import { deltaFor, neededAverage } from '../engine/needed';
 import { BonusInput, Exam, Rule } from '../engine/types';
 import { NATIONAL_DEFAULTS, PRESETS } from '../data/presets';
+import { COURSE_RULES } from './fixtures/courseRules';
 
-const RULES: Rule[] = [...PRESETS, ...Object.values(NATIONAL_DEFAULTS)];
+const RULES: Rule[] = [...PRESETS, ...COURSE_RULES, ...Object.values(NATIONAL_DEFAULTS)];
 const RUNS = 250;
 
 const rng = (seed: number) => () => {

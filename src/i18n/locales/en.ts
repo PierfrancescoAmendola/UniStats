@@ -70,7 +70,6 @@ const en = {
     ruleNational: 'Standard rules',
     ruleNationalSub: 'National defaults, editable',
     rulesCheck: 'Each course has its own rules: check them',
-    rulesCourseHint: 'Pick a course only if it is yours: rules change from course to course. Otherwise use the standard rules and customise them.',
     rulesFrom: 'From the regulation, you can edit them',
     creditsToGraduate: 'Credits to graduate',
     lodeCountsAs: 'Honours (30L) count in the average as',
@@ -358,6 +357,14 @@ const en = {
     rulesNote: 'Rules change by course and enrolment year. Check your course’s final-exam regulation.',
     lodeUnverified: 'Honours value not confirmed in the regulation.',
     customBonusDefault: 'My bonus',
+    bonusType: 'Bonus type',
+    bonusType_flag: 'Yes or no',
+    perLodePoints: 'Points for each honours grade',
+    bonusMax: 'At most',
+    avgFromBase: 'Starts at base',
+    avgToBase: 'Full from base',
+    avgBonusHint: '0 points at the starting base, the maximum at the full base, in proportion in between.',
+    rulesNoUniRule: 'Your university has no single rule: each course has its own. Start from the standard rules and adapt them to your course regulation with "Customize the rules".',
 
     // Milestone
     savedTitle: '{name}, done!',

@@ -90,3 +90,16 @@ describe('exams', () => {
         expect(s.language).toBeNull();
     });
 });
+
+describe('course rules removed in 2.0', () => {
+    it('a profile on a removed course rule goes back to the standard rules', () => {
+        const s = hydrated({ profile: { ...initialState().profile, level: 'L', ruleId: 'unina-inf-L', bonusInput: { speed: 0 } } } as Partial<State>);
+        expect(s.profile.ruleId).toBe('default-L');
+        expect(s.profile.bonusInput).toEqual({});
+    });
+
+    it('keeps a university-wide rule and the student’s own edited rule', () => {
+        const wide = hydrated({ profile: { ...initialState().profile, ruleId: 'polimi-L-LM' } } as Partial<State>);
+        expect(wide.profile.ruleId).toBe('polimi-L-LM');
+    });
+});

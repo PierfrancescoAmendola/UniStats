@@ -72,7 +72,6 @@ const de: Dict = {
     ruleNational: 'Standardregeln',
     ruleNationalSub: 'Nationale Werte, anpassbar',
     rulesCheck: 'Jeder Studiengang hat eigene Regeln: prüfe sie',
-    rulesCourseHint: 'Wähle einen Studiengang nur, wenn es deiner ist: Die Regeln sind je Studiengang verschieden. Sonst nimm die Standardregeln und passe sie an.',
     rulesFrom: 'Aus der Prüfungsordnung, du kannst sie ändern',
     creditsToGraduate: 'Credits zum Abschluss',
     lodeCountsAs: 'Auszeichnung (30L) zählt im Schnitt als',
@@ -360,6 +359,14 @@ const de: Dict = {
     rulesNote: 'Die Regeln ändern sich je nach Studiengang und Einschreibejahr. Prüfe die Abschlussordnung deines Studiengangs.',
     lodeUnverified: 'Wert der Auszeichnung in der Ordnung nicht bestätigt.',
     customBonusDefault: 'Mein Bonus',
+    bonusType: 'Art des Bonus',
+    bonusType_flag: 'Ja oder nein',
+    perLodePoints: 'Punkte pro Auszeichnung',
+    bonusMax: 'Höchstens',
+    avgFromBase: 'Beginnt bei Basis',
+    avgToBase: 'Voll ab Basis',
+    avgBonusHint: '0 Punkte bei der Startbasis, das Maximum bei der vollen Basis, dazwischen anteilig.',
+    rulesNoUniRule: 'Deine Universität hat keine einheitliche Regel: jeder Studiengang hat seine eigene. Starte mit den Standardregeln und passe sie mit „Regeln anpassen“ an die Ordnung deines Studiengangs an.',
 
     // Milestone
     savedTitle: '{name}, geschafft!',

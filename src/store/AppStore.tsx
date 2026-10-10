@@ -86,7 +86,11 @@ export const reducer = (s: State, a: Action): State => {
             // Every hydration is one launch; the first one also dates the first open.
             const saved = a.state.nudges;
             const nudges = { ...initialNudges(a.now), ...saved };
-            return { ...s, ...a.state, profile: { ...initialProfile, ...a.state.profile }, nudges: { ...nudges, launches: nudges.launches + 1 }, hydrated: true };
+            let profile: Profile = { ...initialProfile, ...a.state.profile };
+            // Course rules are no longer shipped: a profile that used one goes back to the national
+            // defaults (an edited copy, customRule, is the student's own and stays).
+            if (profile.ruleId && !findRule(profile.ruleId)) profile = { ...profile, ruleId: `default-${profile.level}`, bonusInput: {} };
+            return { ...s, ...a.state, profile, nudges: { ...nudges, launches: nudges.launches + 1 }, hydrated: true };
         }
         case 'profile':
             return { ...s, profile: { ...s.profile, ...a.patch } };

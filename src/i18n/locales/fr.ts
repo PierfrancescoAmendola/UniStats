@@ -72,7 +72,6 @@ const fr: Dict = {
     ruleNational: 'Règles standard',
     ruleNationalSub: 'Valeurs nationales, modifiables',
     rulesCheck: 'Chaque filière a ses règles : vérifie-les',
-    rulesCourseHint: "Choisis une filière seulement si c'est la tienne : les règles changent d'une filière à l'autre. Sinon, utilise les règles standard et personnalise-les.",
     rulesFrom: 'Tirées du règlement, tu peux les modifier',
     creditsToGraduate: 'Crédits pour le diplôme',
     lodeCountsAs: 'La mention (30L) compte dans la moyenne comme',
@@ -360,6 +359,14 @@ const fr: Dict = {
     rulesNote: 'Les règles changent selon la filière et l’année d’inscription. Vérifie le règlement de soutenance de ta filière.',
     lodeUnverified: 'Valeur de la mention non confirmée dans le règlement.',
     customBonusDefault: 'Mon bonus',
+    bonusType: 'Type de bonus',
+    bonusType_flag: 'Oui ou non',
+    perLodePoints: 'Points par mention',
+    bonusMax: 'Au maximum',
+    avgFromBase: 'Commence à la base',
+    avgToBase: 'Complet dès la base',
+    avgBonusHint: '0 point à la base de départ, le maximum à la base complète, proportionnel entre les deux.',
+    rulesNoUniRule: 'Ton université n’a pas de règle unique : chaque filière a la sienne. Pars des règles standard et adapte-les au règlement de ta filière avec « Personnaliser les règles ».',
 
     // Milestone
     savedTitle: '{name}, c’est fait !',
